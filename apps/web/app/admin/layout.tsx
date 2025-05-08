@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import type { Database } from "@/types/supabase";
+import type { Database } from "@/utils/supabase";
 import { redirect } from "next/navigation";
 import Sidebar from "@/components/Sidebar";  // 🔥 Usamos Sidebar dinámico
 import MobileNav from "@/components/MobileNav"; 
