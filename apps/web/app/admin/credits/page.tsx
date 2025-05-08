@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "@lib/supabase-web";
-import styles from "../admin.module.css";
+import styles from "@/styles/admin.module.css";
 
 interface Compra {
   id: string;
