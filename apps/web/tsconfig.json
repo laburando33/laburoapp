@@ -4,34 +4,20 @@
     "jsx": "preserve",
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "./*"
-      ],
-
-      "@repo/ui/*": [
-        "../packages/ui/*"
-      ],
-      "@repo/utils/*": [
-        "../packages/utils/*"
-      ],
-      "@repo/ui": [
-        "./components/Header"
-      ], 
+      "@/*": ["./*"],
       "@/components/*": ["./components/*"],
-
+      "@/utils/*": ["../packages/utils/*"],
+      "@repo/ui/*": ["../packages/ui/*"],
+      "@repo/utils/*": ["../packages/utils/*"],
+      "@repo/ui": ["./components/Header"],
       "@lib/*": ["lib/*"]
-
     },
     "plugins": [
       {
         "name": "next"
       }
     ],
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "noEmit": true,
     "incremental": true,
@@ -45,7 +31,5 @@
     "next.config.js",
     ".next/types/**/*.ts"
   ],
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules"]
 }
