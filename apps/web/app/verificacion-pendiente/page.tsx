@@ -1,10 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import styles from "@/components/profesional/dashboardVerificacion.module.css";
+import styles from "@/components/professional/dashboardVerificacion.module.css";
 import { useSession } from "@supabase/auth-helpers-react";
-import VerificacionProfesional from "@/components/profesional/VerificacionProfesional";
-import { logout } from "@/lib/logout";
+import VerificacionProfesional from "@/components/professional/VerificacionProfesional";
 import { useRouter } from "next/navigation";
 
 export default function VerificacionPendiente() {

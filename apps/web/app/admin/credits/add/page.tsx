@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { supabase } from "../../../../lib/supabase-web";
+import { supabase } from "@lib/supabase-web";
 import { useRouter } from "next/navigation";
-import styles from "../../admin.module.css";
+import styles from "@/styles/admin.module.css";
 
 export default function AddCreditsPage() {
   const router = useRouter();
