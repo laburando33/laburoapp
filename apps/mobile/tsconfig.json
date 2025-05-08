@@ -1,0 +1,13 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "strict": true,
+    "baseUrl": ".", // obligatorio para paths
+    "paths": {
+      "@lib/web-supabase": ["../../packages/utils/supabase-web.ts"],
+      "@lib/mobile-supabase": ["../../packages/utils/supabase-mobile.ts"],
+      "@components/*": ["../../packages/ui/components/*"]
+    }
+  },
+  "include": ["."]
+}

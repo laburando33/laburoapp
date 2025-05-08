@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@components/*": ["packages/ui/components/*"],
+      "@lib/web-supabase": ["packages/utils/supabase-web.ts"],
+      "@lib/mobile-supabase": ["packages/utils/supabase-mobile.ts"]
+    },
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "target": "esnext",
+    "jsx": "react-jsx"
+  }
+}

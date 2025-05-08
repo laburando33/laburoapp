@@ -1,0 +1,104 @@
+.downloadApp {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    padding: 10rem 2rem;
+    background-image: url('/fondo-laburandoap-descargar-app.png');
+    background-repeat: no-repeat; /* 🚫 No se repite */
+    background-size: cover;       /* ✅ Que cubra todo el hero */
+    background-position: center;  /* ✅ Centrado */
+  }
+  
+  .subtitle {
+    font-size: 1.1rem;
+    color: #555;
+    margin-bottom: 1rem;
+  }
+  
+  .title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #111;
+    background-color: #fff;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+  }
+  
+  .content {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .textSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    max-width: 500px;
+  }
+  
+  .description {
+    font-size: 1.1rem;
+    color: #333;
+  }
+  
+  .buttons {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .button {
+    background-color: #000;
+    color: #fff;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+  }
+  
+  .button:hover {
+    background-color: #fcd93f;
+    color: #000;
+  }
+  
+  .qrSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .qrText {
+    font-size: 0.9rem;
+    color: #555;
+    max-width: 250px;
+    text-align: center;
+  }
+  
+  /* Responsive */
+  @media (min-width: 768px) {
+    .content {
+      flex-direction: row;
+      justify-content: center;
+    }
+  
+    .textSection {
+      align-items: flex-start;
+      text-align: left;
+    }
+  }
+  

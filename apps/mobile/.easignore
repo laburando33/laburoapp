@@ -1,0 +1,34 @@
+# ⛔️ Excluir apps no necesarias
+../../apps/web/
+
+# ⛔️ Excluir packages de desarrollo que no usa mobile
+../../packages/ui/
+../../packages/eslint-config/
+../../packages/typescript-config/
+
+# ✅ NO excluir packages/utils porque mobile lo usa
+# ../../packages/utils/  ← ¡NO AGREGAR ESTO!
+
+# 🧹 Ignorar basura o archivos pesados innecesarios
+*.log
+*.tar.gz
+*.zip
+*.mp4
+*.mov
+*.psd
+*.ai
+*.apk
+*.aab
+
+# 🧪 Ignorar caché o builds anteriores
+node_modules/
+.expo/
+coverage/
+build/
+dist/
+# Evita subir binarios de npm global
+C:\Users\PC\AppData\Roaming\npm
+%APPDATA%\npm
+UsersPCAppDataRoamingnpm/
+/android
+/ios

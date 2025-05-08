@@ -1,0 +1,122 @@
+.hero {
+  display: flex;
+  justify-content: center;
+  background-image: url('/fondo-laburandoapp.png');
+  background-size: cover;
+
+  
+}
+
+
+
+.imageTextWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  margin-bottom: 63px;
+}
+
+.imageContainer {
+  flex-shrink: 0;
+}
+
+.statusItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+
+
+.statusText {
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #fcd93f;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+}
+
+
+
+.heroTitle {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: #111;
+  font-weight: bold;
+}
+
+.heroSubtitle {
+  font-size: 2rem;
+  color: #444;
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+}
+
+.heroSubtitle span {
+  color: #fff;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.searchSection {
+  display: flex;
+  width: 100%;
+}
+
+.ctaModernButtonFull {
+  background-color: #000;
+  color: #fff;
+  padding: 1rem;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+  transition: all 0.3s ease-in-out;
+}
+
+.ctaModernButtonFull:hover {
+  transform: translateY(-2px) scale(1.02);
+  background-color: #111;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .imageTextWrapper {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .textContent {
+    align-items: center;
+  }
+  .heroTitle {
+    font-size: 1.3rem;
+    margin-bottom: 0px;
+  }
+  .heroSubtitle {
+    font-size: 1.6rem;
+  }
+  .heroSubtitle span {
+    font-size: 3.2rem;
+  }
+  .statusItem {
+display: none;  }
+.ctaModernButtonFull {
+    width: 80% ;
+    font-size: 1rem;
+  } 
+  .searchSection {
+    flex-direction: column;
+    align-items: center;
+  }
+  .searchInput {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+}

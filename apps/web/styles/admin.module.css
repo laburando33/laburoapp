@@ -1,0 +1,241 @@
+/* General Dashboard Styles */
+.dashboardContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #333;
+}
+
+/* Tabs */
+.tabContainer {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.tabBtn {
+  background-color: #f1f1f1;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.tabBtn:hover {
+  background-color: #e0e0e0;
+}
+
+.activeTab {
+  background-color: #fcd03f;
+  color: #000;
+  font-weight: bold;
+}
+
+/* Section Styles */
+.section {
+  margin-top: 2rem;
+}
+
+.sectionTitle {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #555;
+  text-align: center;
+}
+
+/* Cards */
+.cardList {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+
+.cardItem {
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  transition: transform 0.3s;
+}
+
+.cardItem:hover {
+  transform: translateY(-5px);
+}
+
+/* Tables */
+.tableWrapper {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 600px;
+}
+
+.table th,
+.table td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.table th {
+  background-color: #fcd03f;
+  color: #000;
+}
+
+.table tr:hover {
+  background-color: #f9f9f9;
+}
+
+/* Loading */
+.loadingContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60vh;
+}
+
+.loading {
+  font-size: 1.2rem;
+  color: #555;
+}
+
+/* Alerts */
+.alert {
+  background-color: #ffefc7;
+  color: #6b4e00;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+/* Layout Styles */
+.adminLayout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebarWrapper {
+  width: 250px;
+  background: #ffffff;
+  border-right: 1px solid #ddd;
+  margin-top: 30px;
+}
+
+.adminContent {
+  flex: 1;
+  padding: 2rem;
+  background: #f9f9f9;
+}
+
+.mobileNavContainer {
+  display: block;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .tabContainer {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .cardList {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebarWrapper {
+    display: none;
+  }
+
+  .adminContent {
+    padding-bottom: 80px;
+  }
+
+  .mobileNav {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background: #fcd03f;
+    justify-content: space-around;
+    padding: 0.75rem 0;
+    border-top: 1px solid #ccc;
+    z-index: 999;
+  }
+
+  .mobileNav a {
+    font-weight: bold;
+    font-size: 1rem;
+    color: black;
+    text-decoration: none;
+  }
+
+  .activeMobileLink {
+    border-bottom: 2px solid black;
+  }
+}
+/* Ocultar Sidebar en móviles */
+@media (max-width: 768px) {
+  .sidebarWrapper {
+    display: none;
+  }
+}
+
+/* Action Buttons */
+.actionButtons {
+  display: flex;
+  gap: 8px;
+}
+
+.viewButton {
+  background-color: #4caf50;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  text-decoration: none;
+}
+
+.deleteButton {
+  background-color: #e53935;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Pagination */
+.pagination {
+  display: flex;
+  gap: 5px;
+  margin-top: 15px;
+  justify-content: center;
+}
+
+.pagination button {
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  cursor: pointer;
+}
+
+.pagination .activePage {
+  background-color: #4caf50;
+  color: white;
+}

@@ -1,0 +1,43 @@
+.verificacionBox {
+  margin-top: 2rem;
+  background-color: #fff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);
+}
+
+.verificado {
+  color: green;
+  font-weight: bold;
+  margin-top: 1rem;
+}
+
+.verificationForm {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.verificationForm input[type="file"] {
+  padding: 0.5rem;
+  background-color: #f5f5f5;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.ctaButton {
+  background-color: #fcb500;
+  color: #fff;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.ctaButton:hover {
+  background-color: #e0a800;
+}

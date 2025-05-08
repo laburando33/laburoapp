@@ -1,0 +1,50 @@
+/* styles/terms.module.css */
+
+.pageContainer {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    font-family: "Geist", sans-serif;
+    background-color: #fff;
+    color: #1a1a1a;
+  }
+  
+  .mainContent {
+    padding: 2rem;
+    max-width: 800px;
+    margin: 0 auto;
+    flex-grow: 1;
+  }
+  
+  .title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+  }
+  
+  h2 {
+    font-size: 1.25rem;
+    margin-top: 2rem;
+    color: #333;
+  }
+  
+  p,
+  li {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+  
+  ul {
+    padding-left: 1.5rem;
+    list-style-type: disc;
+  }
+  
+  footer {
+    background-color: #222;
+    color: #ccc;
+    text-align: center;
+    padding: 2rem;
+    font-size: 0.9rem;
+  }
+  

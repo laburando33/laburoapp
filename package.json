@@ -1,0 +1,56 @@
+{
+  "name": "laburando-v2",
+  "private": true,
+  "packageManager": "npm@11.1.0",
+  "overrides": {
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:web": "turbo run dev --filter=web",
+    "dev:mobile": "expo start --workspace apps/mobile",
+    "build": "turbo run build"
+  },
+  "devDependencies": {
+    "@babel/plugin-transform-flow-strip-types": "^7.26.5",
+    "@repo/eslint-config": "^0.0.0",
+    "@repo/typescript-config": "^0.0.0",
+    "@turbo/gen": "^2.5.0",
+    "@types/node": "^22.14.1",
+    "@types/react": "^18.3.20",
+    "@types/react-dom": "^18.3.6",
+    "eslint": "^9.24.0",
+    "eslint-config-next": "^15.3.0",
+    "expo": "^50.0.0",
+    "turbo": "^2.5.0",
+    "typescript": "5.3"
+  },
+  "dependencies": {
+    "@expo/next-adapter": "^6.0.0",
+    "@heroicons/react": "^2.2.0",
+    "@react-navigation/native": "^7.0.19",
+    "@react-navigation/stack": "^7.2.3",
+    "@supabase/auth-helpers-nextjs": "^0.10.0",
+    "@supabase/supabase-js": "^2.49.3",
+    "expo-linking": "~6.2.2",
+    "framer-motion": "^12.9.2",
+    "lucide-react": "^0.503.0",
+    "mercadopago": "^2.4.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-hot-toast": "^2.5.2",
+    "react-native-safe-area-context": "4.8.2",
+    "react-native-screens": "^4.10.0",
+    "resend": "^4.2.0"
+  },
+  "resolutions": {
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "@types/react": "18.2.14",
+    "@types/react-dom": "18.2.7"
+  }
+}

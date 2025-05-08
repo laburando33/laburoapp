@@ -1,0 +1,21 @@
+.solicitudBox {
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.unlockButton {
+  margin-top: 1rem;
+  background-color: #fcd03f;
+  border: none;
+  border-radius: 6px;
+  padding: 0.75rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.unlockButton:hover {
+  background-color: #ffaa00;
+}

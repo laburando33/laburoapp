@@ -1,0 +1,134 @@
+.section {
+    background-color: white;
+  }
+  
+  .container {
+    margin-top: 50px;
+    padding: 0 1rem;
+  }
+  
+  .title {
+    font-size: 1.875rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 2.5rem;
+    color: #333;
+    
+  }
+  
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 1rem;
+    max-width: 1024px;
+  }
+  
+  
+  
+
+  .link {
+    display: block;
+    text-decoration: none;
+  }
+  
+  .card {
+    background-color: white;
+    border: 2px solid #f3f4f6;
+    border-radius: 0.75rem;
+    padding: 1.25rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    height: 100%;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+  }
+  
+  .card:hover {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-color: #fcd93f;
+  }
+  
+  .iconWrapper {
+    width: 10rem !important;  
+    height: 10rem;
+    background-color: #fff9e6;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+    transition: transform 0.3s ease;
+  }
+  
+  .card:hover .iconWrapper {
+    transform: scale(1.1);
+  }
+  
+  .imageContainer {
+    width: 3rem;
+    height: 3rem;
+    position: relative;
+  }
+  
+  .image {
+    object-fit: contain;
+  }
+  
+  .reactIconContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .categoryName {
+    display: block;
+    font-size: 1.125rem;
+    font-weight: 500;
+    color: #333;
+    transition: color 0.3s ease;
+  }
+  
+  .card:hover .categoryName {
+    color: #e6b800;
+  }
+  .jewelEffect {
+    filter: drop-shadow(0 0 4px #fcd93f) brightness(1.15);
+    transition: transform 0.3s ease, filter 0.3s ease;
+  }
+  
+  .card:hover .jewelEffect {
+    transform: scale(1.05);
+    filter: drop-shadow(0 0 6px #ffd700) brightness(1.25);
+  }
+  .ctaContainer {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .ctaButton {
+    background-color: #000;
+    color: #fff;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .ctaButton:hover {
+    background-color: #111;
+    transform: scale(1.03);
+  }
+  
+  @media (max-width: 768px) {
+    .grid {
+      grid-template-columns: repeat(1, 1fr);
+    }
+  }
+ 

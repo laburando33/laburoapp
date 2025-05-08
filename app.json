@@ -1,0 +1,12 @@
+{
+  "expo": {
+    "extra": {
+      "eas": {
+        "projectId": "c4342858-7606-4bb0-9737-d1ee58c4136b"
+      }
+    },
+    "android": {
+      "package": "com.laburando.app"
+    }
+  }
+}

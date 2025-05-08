@@ -1,0 +1,14 @@
+{
+  "expo": {
+    "extra": {
+      "eas": {
+        "projectId": "21e15a01-e72e-42d4-b0d8-f963796a7278"
+      }
+    },
+    "owner": "cattash",
+    "slug": "laburandoappv2",
+    "android": {
+      "package": "com.laburando.app"
+    }
+  }
+}

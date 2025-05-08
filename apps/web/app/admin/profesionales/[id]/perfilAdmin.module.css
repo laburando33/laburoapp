@@ -1,0 +1,19 @@
+.profileContainer {
+  padding: 2rem;
+}
+
+.title {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.data p {
+  margin: 0.5rem 0;
+}
+
+.purchases {
+  margin-top: 2rem;
+  background: #f9f9f9;
+  padding: 1rem;
+  border-radius: 8px;
+}

@@ -1,0 +1,65 @@
+.section {
+    padding: 3rem 1.5rem;
+    background-color: #f9f9f9;
+  }
+  
+  .title {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
+  
+  .grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center;
+  }
+  
+  .card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    padding: 1.5rem;
+    text-align: center;
+    width: 260px;
+  }
+  
+  .photo {
+    width: 100%;
+    border-radius: 8px;
+    object-fit: cover;
+  }
+  
+  .name {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-top: 1rem;
+  }
+  
+  .profession {
+    color: #333;
+    margin: 0.5rem 0;
+  }
+  
+  .location {
+    color: #777;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+  }
+  
+  .button {
+    background-color: #000;
+    color: #fff;
+    border: none;
+    padding: 0.75rem 1.25rem;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .button:hover {
+    background-color: #111;
+  }
+  
