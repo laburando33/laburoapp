@@ -15,7 +15,7 @@ export default function MobileNav({ role }: MobileNavProps) {
   const pathname = usePathname();
   const router = useRouter();
 
-  const links = role === "administrador" ? [
+  const links = role === "admin" ? [
     { href: "/admin/dashboard", icon: <Home size={42} /> },
     { href: "/admin/profesionales", icon: <User size={42} /> },
     { href: "/admin/shop", icon: <CreditCard size={42} /> },

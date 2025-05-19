@@ -1,39 +1,49 @@
 import { supabase } from "@/lib/supabase-web";
 
 export async function createProfessionalProfile(user: any) {
-  console.log("👤 Usuario autenticado:", user?.id);
+  try {
+    console.log("👤 Usuario autenticado:", user?.id);
 
-  if (!user?.id) return;
+    if (!user?.id) {
+      console.error("❌ Usuario no autenticado o sin ID válido.");
+      return;
+    }
 
-  // Revisa si ya existe el profesional
-  const { data, error } = await supabase
-    .from("professionals")
-    .select("user_id")
-    .eq("user_id", user.id)
-    .maybeSingle();
+    // 🔍 1️⃣ Revisar si el profesional ya está registrado
+    const { data, error } = await supabase
+      .from("professionals")
+      .select("user_id")
+      .eq("user_id", user.id)
+      .maybeSingle();
 
-  if (error) {
-    console.error("❌ Error consultando profesionales:", error.message);
-    return;
-  }
+    if (error) {
+      console.error("❌ Error al consultar la tabla professionals:", error.message);
+      return;
+    }
 
-  if (data) {
-    console.log("✅ Profesional ya registrado:", user.id);
-    return;
-  }
+    if (data) {
+      console.log("✅ Profesional ya existe en la base de datos:", user.id);
+      return;
+    }
 
-  // Si no existe, lo crea
-  const { error: insertError } = await supabase.from("professionals").insert({
-    user_id: user.id,
-    email: user.email,
-    full_name: user.user_metadata?.name || "",
-    phone: user.user_metadata?.phone || "",
-    category: user.user_metadata?.category || "",
-  });
+    // ✏️ 2️⃣ Si no existe, creamos el perfil en Supabase
+    const metadata = user.user_metadata || {};
+    const { error: insertError } = await supabase.from("professionals").insert({
+      user_id: user.id,
+      email: user.email,
+      full_name: metadata.name || "",
+      phone: metadata.phone || "",
+      category: metadata.category || "",
+      is_verified: false, // Asumo que no está verificado al momento de registrarse
+    });
 
-  if (insertError) {
-    console.error("❌ Error creando profesional:", insertError.message);
-  } else {
-    console.log("🎉 Profesional creado con éxito:", user.id);
+    if (insertError) {
+      console.error("❌ Error al crear el perfil del profesional:", insertError.message);
+    } else {
+      console.log("🎉 Profesional creado exitosamente:", user.id);
+    }
+
+  } catch (err) {
+    console.error("❌ Error inesperado:", err.message);
   }
 }

@@ -89,7 +89,7 @@ export default function Header() {
                 <img src="/LogoStore/LogoAppStore.jpg" alt="Disponible en App Store" style={{ height: 50 }} />
               </a>
             </div>
-            <div style={{ marginTop: "1.5rem" }}>
+            <div style={{ marginTop: "1.5rem", fontSize: "0.9rem" }}>
               <Link href="/register/profesional">
                 <span style={{ color: "#000", textDecoration: "underline", fontSize: "0.95rem", fontWeight: 500, cursor: "pointer" }}>Continuar en la web</span>
               </Link>

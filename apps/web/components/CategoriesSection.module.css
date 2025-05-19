@@ -1,9 +1,28 @@
 .section {
     background-color: white;
   }
-  
+  .section h2 {
+    font-size: 2.5rem;
+    font-weight: 300;
+    color: #111;
+    text-align: center;
+   
+
+  }
+  .section h4 {
+    font-size: 1.5rem;
+    font-weight: 300;
+    color: #444;
+    margin-top: 5rem;
+    text-align: center;
+  }
+  .section h2 strong {
+    font-weight: 600;
+    color: #fcd93f;
+    font-size: 2.5rem;
+  }
   .container {
-    margin-top: 50px;
+    margin-bottom: 100px;
     padding: 0 1rem;
   }
   
@@ -20,7 +39,7 @@
     display: grid;
     grid-template-columns: repeat(6, 1fr);
     gap: 1rem;
-    max-width: 1024px;
+    margin: 10px;
   }
   
   
@@ -42,7 +61,7 @@
     align-items: center;
     gap: 0.75rem;
     height: 100%;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 1px 3px rgba(26, 25, 25, 0.1);
     transition: all 0.3s ease;
   }
   
@@ -52,9 +71,6 @@
   }
   
   .iconWrapper {
-    width: 10rem !important;  
-    height: 10rem;
-    background-color: #fff9e6;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -68,8 +84,7 @@
   }
   
   .imageContainer {
-    width: 3rem;
-    height: 3rem;
+    display: flex;
     position: relative;
   }
   
@@ -104,31 +119,39 @@
     filter: drop-shadow(0 0 6px #ffd700) brightness(1.25);
   }
   .ctaContainer {
-    margin-top: 2rem;
     display: flex;
     justify-content: center;
   }
   
   .ctaButton {
-    background-color: #000;
-    color: #fff;
-    padding: 1rem 2rem;
-    border: none;
-    border-radius: 10px;
+    color: black;
     font-size: 1.1rem;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s ease;
+    margin-top: 30px;
+    border-bottom: #fcd93f solid 3px;
+    font-weight: 300;
   }
   
   .ctaButton:hover {
-    background-color: #111;
+    background-color: #fcd93f;
     transform: scale(1.03);
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
   }
   
   @media (max-width: 768px) {
     .grid {
-      grid-template-columns: repeat(1, 1fr);
+      grid-template-columns: repeat(2, 1fr);
     }
+    .section h2 {
+      font-size: 1.2rem;
+    } 
+    .section h2 strong {
+      font-size: 1.5rem;
+    }
+    .section h4 {
+      font-size: 1rem;
+      margin-top: 1.5rem;
+    }
+    
   }
  

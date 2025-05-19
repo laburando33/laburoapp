@@ -4,21 +4,47 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { toast } from "react-hot-toast";
-import type { Database } from "@/types/supabase";
+import { supabase } from "@/lib/supabase-web";
 import styles from "./login.module.css";
 
 export default function LoginPage() {
   const router = useRouter();
-  const supabase = createClientComponentClient<Database>();
+  const supabase = createClientComponentClient();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const checkSession = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
+      const {
+        data: { session },
+        error,
+      } = await supabase.auth.getSession();
+      if (error) {
+        console.error("⚠️ Error al obtener sesión:", error.message);
+        return;
+      }
       if (session?.user) {
-        router.replace("/admin/profile");
+        // 🔄 Verificar si existe en "professionals"
+        const { data: userData, error: userError } = await supabase
+          .from("professionals")
+          .select("role")
+          .eq("user_id", session.user.id)
+          .single();
+
+        if (userError) {
+          console.error("⚠️ Error al obtener datos del usuario:", userError.message);
+          return;
+        }
+
+        // 🔀 Redirigir según el rol
+        if (userData?.role === "admin") {
+          router.replace("/admin/dashboard");
+        } else if (userData?.role === "profesional") {
+          router.replace("/professional/dashboard");
+        } else {
+          router.replace("/client/dashboard");
+        }
       }
     };
     checkSession();
@@ -26,26 +52,53 @@ export default function LoginPage() {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!email || !password) {
+      toast.error("⚠️ Completa todos los campos.");
+      return;
+    }
+
     setLoading(true);
 
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
 
     if (error) {
-      toast.error("❌ Error al iniciar sesión. Verifica tus credenciales.");
+      console.error("❌ Error al iniciar sesión:", error.message);
+      toast.error("❌ Verifica tus credenciales.");
       setLoading(false);
       return;
     }
 
-    toast.success("✅ Bienvenido!");
-    setTimeout(() => {
-      router.refresh();
-      router.push("/admin/profile");
-    }, 800);
-  };
+    // 🔄 Verificar si existe en "professionals"
+    const { data: userData, error: userError } = await supabase
+      .from("professionals")
+      .select("role")
+      .eq("user_id", data.user?.id)
+      .single();
 
-  const handleGoogleLogin = async () => {
-    const { error } = await supabase.auth.signInWithOAuth({ provider: "google" });
-    if (error) toast.error("❌ Error al iniciar con Google: " + error.message);
+    if (userError) {
+      console.error("⚠️ Error al obtener datos del usuario:", userError.message);
+      toast.error("⚠️ No se pudo obtener el perfil del usuario.");
+      setLoading(false);
+      return;
+    }
+
+    if (userData) {
+      if (userData.role === "admin") {
+        router.replace("/admin/dashboard");
+      } else if (userData.role === "profesional") {
+        router.replace("/professional/dashboard");
+      } else {
+        router.replace("/client/dashboard");
+      }
+    } else {
+      toast.error("⚠️ No se encontró el usuario en la base de datos.");
+    }
+
+    toast.success("✅ Bienvenido!");
+    setLoading(false);
   };
 
   return (
@@ -74,16 +127,13 @@ export default function LoginPage() {
       </form>
 
       <p style={{ textAlign: "center", marginTop: "1rem" }}>
-        <a href="/auth/forgot-password" style={{ color: "#fcb500", textDecoration: "underline" }}>
+        <a
+          href="/auth/forgot-password"
+          style={{ color: "#fcb500", textDecoration: "underline" }}
+        >
           ¿Olvidaste tu contraseña?
         </a>
       </p>
-
-      <div style={{ marginTop: "2rem", textAlign: "center" }}>
-        <button className={styles.googleButton} onClick={handleGoogleLogin}>
-          Continuar con Google
-        </button>
-      </div>
     </div>
   );
 }

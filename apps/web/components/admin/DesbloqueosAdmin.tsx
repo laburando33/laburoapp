@@ -1,57 +1,34 @@
+// components/admin/DesbloqueosAdmin.tsx
 "use client";
 
-import { useEffect, useState } from "react";
-import { supabase } from "@/lib/supabase-web";
-import styles from "./ComprasAdmin.module.css"; // reutiliza estilos existentes
+import { useEffect, useMemo, useState } from "react";
+import { useFetch } from "@/hooks/useFetch";
+import styles from "./ComprasAdmin.module.css";
 import { FiDownload } from "react-icons/fi";
 
-interface Desbloqueo {
-  unlock_id: string;
-  unlocked_at: string;
-  profesional_nombre: string;
-  profesional_email: string;
-  categoria: string;
-  zona: string;
-  servicio: string;
-  ubicacion: string;
-  cliente_nombre: string;
-  cliente_contacto: string;
-}
-
 export default function DesbloqueosAdmin() {
-  const [desbloqueos, setDesbloqueos] = useState<Desbloqueo[]>([]);
+  // 🚀 Reutilizamos el hook de fetch para evitar repetir lógica
+  const { data: desbloqueos, loading } = useFetch("admin_unlocked_view", "unlocked_at", false);
   const [filtro, setFiltro] = useState("");
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const { data, error } = await supabase
-        .from("admin_unlocked_view")
-        .select("*")
-        .order("unlocked_at", { ascending: false });
+  // 🔍 Optimización con useMemo para evitar recalcular en cada render
+  const filtradas = useMemo(() => {
+    return desbloqueos.filter((d) =>
+      d.profesional_email.toLowerCase().includes(filtro.toLowerCase())
+    );
+  }, [desbloqueos, filtro]);
 
-      if (error) {
-        console.error("❌ Error cargando desbloqueos:", error.message);
-      } else {
-        setDesbloqueos(data || []);
-      }
-    };
+  // 📊 Cálculo optimizado del profesional más activo
+  const profesionalTop = useMemo(() => {
+    const actividad = filtradas.reduce((acc, curr) => {
+      acc[curr.profesional_email] = (acc[curr.profesional_email] || 0) + 1;
+      return acc;
+    }, {} as Record<string, number>);
 
-    fetchData();
-  }, []);
+    return Object.entries(actividad).sort((a, b) => b[1] - a[1])[0];
+  }, [filtradas]);
 
-  const filtradas = desbloqueos.filter((d) =>
-    d.profesional_email.toLowerCase().includes(filtro.toLowerCase())
-  );
-
-  const totalDesbloqueos = filtradas.length;
-
-  const profesionalMasActivo = filtradas.reduce((acc, curr) => {
-    acc[curr.profesional_email] = (acc[curr.profesional_email] || 0) + 1;
-    return acc;
-  }, {} as Record<string, number>);
-
-  const profesionalTop = Object.entries(profesionalMasActivo).sort((a, b) => b[1] - a[1])[0];
-
+  // 📥 Exportación a CSV optimizada
   const exportToCSV = () => {
     const headers = [
       "Fecha",
@@ -62,6 +39,7 @@ export default function DesbloqueosAdmin() {
       "Cliente",
       "Contacto",
     ];
+
     const rows = filtradas.map((d) => [
       new Date(d.unlocked_at).toLocaleString(),
       d.profesional_nombre,
@@ -72,25 +50,26 @@ export default function DesbloqueosAdmin() {
       d.cliente_contacto,
     ]);
 
-    const csvContent =
-      "data:text/csv;charset=utf-8," +
-      [headers, ...rows].map((e) => e.join(",")).join("\n");
+    const csvContent = [headers, ...rows].map((e) => e.join(",")).join("\n");
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
 
-    const encodedUri = encodeURI(csvContent);
     const link = document.createElement("a");
-    link.setAttribute("href", encodedUri);
+    link.href = url;
     link.setAttribute("download", "desbloqueos_laburando.csv");
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
   };
 
+  if (loading) return <p>🔄 Cargando desbloqueos...</p>;
+
   return (
     <div className={styles.container}>
       <h1>🔓 Desbloqueos de Solicitudes</h1>
 
       <div className={styles.summaryBox}>
-        <p><strong>Total desbloqueos:</strong> {totalDesbloqueos}</p>
+        <p><strong>Total desbloqueos:</strong> {filtradas.length}</p>
         {profesionalTop && (
           <p>
             <strong>Profesional más activo:</strong> {profesionalTop[0]} ({profesionalTop[1]} desbloqueos)

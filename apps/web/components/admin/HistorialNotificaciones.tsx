@@ -1,75 +1,39 @@
-"use client";
+import { useFetch } from "@/hooks/useFetch";
+import { useState } from "react";
+import { supabase } from "@lib/supabase-web";
 
-import { useEffect, useState } from "react";
-import { supabase } from "@/lib/supabase-web";
-import styles from "./ComprasAdmin.module.css";
-import { FiBell } from "react-icons/fi";
+const HistorialNotificaciones = () => {
+  const [page, setPage] = useState(0);
+  const { data: notificaciones, loading } = useFetch("notifications", {
+    orderBy: "created_at",
+    ascending: false,
+    limit: 10,
+    page,
+  });
 
-interface Log {
-  id: string;
-  solicitud_id: string;
-  servicio: string;
-  ubicacion: string;
-  enviados: number;
-  enviado_en: string;
-  cliente_nombre: string;
-}
-
-export default function HistorialNotificaciones() {
-  const [logs, setLogs] = useState<Log[]>([]);
-
-  useEffect(() => {
-    const fetchLogs = async () => {
-      const { data, error } = await supabase
-        .from("admin_notificaciones_log")
-        .select("*")
-        .order("enviado_en", { ascending: false });
-
-      if (error) {
-        console.error("❌ Error al cargar logs:", error.message);
-      } else {
-        setLogs(data || []);
-      }
-    };
-
-    fetchLogs();
-  }, []);
+  if (loading) return <p>🔄 Cargando notificaciones...</p>;
 
   return (
-    <div className={styles.container}>
-      <h1><FiBell /> Historial de Notificaciones</h1>
-      <p>Registro de notificaciones enviadas por solicitud y zona.</p>
+    <div>
+      <h2>Historial de Notificaciones</h2>
+      <ul>
+        {notificaciones.map((notif) => (
+          <li key={notif.id}>
+            <strong>{notif.title}</strong> — {notif.message} —{" "}
+            {new Date(notif.created_at).toLocaleDateString()}
+          </li>
+        ))}
+      </ul>
 
-      {logs.length === 0 ? (
-        <p>No hay registros aún.</p>
-      ) : (
-        <div className={styles.scrollTable}>
-          <table className={styles.table}>
-            <thead>
-              <tr>
-                <th>Fecha</th>
-                <th>Servicio</th>
-                <th>Zona</th>
-                <th>Cliente</th>
-                <th>Cantidad</th>
-                <th>ID Solicitud</th>
-              </tr>
-            </thead>
-            <tbody>
-              {logs.map((log) => (
-                <tr key={log.id}>
-                  <td>{new Date(log.enviado_en).toLocaleString()}</td>
-                  <td>{log.servicio}</td>
-                  <td>{log.ubicacion}</td>
-                  <td>{log.cliente_nombre}</td>
-                  <td>{log.enviados}</td>
-                  <td style={{ fontSize: "0.75rem" }}>{log.solicitud_id}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
+      {/* 🚀 Paginación */}
+      <div style={{ display: "flex", gap: "10px", marginTop: "20px" }}>
+        <button onClick={() => setPage((prev) => Math.max(prev - 1, 0))} disabled={page === 0}>
+          ⬅️ Anterior
+        </button>
+        <button onClick={() => setPage((prev) => prev + 1)}>Siguiente ➡️</button>
+      </div>
     </div>
   );
-}
+};
+
+export default HistorialNotificaciones;

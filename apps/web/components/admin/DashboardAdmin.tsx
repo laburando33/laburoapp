@@ -1,83 +1,87 @@
-
-'use client';
+"use client";
 
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase-web";
 import styles from "./DashboardAdmin.module.css";
-
-interface Profesional {
-  user_id: string;
-  full_name: string;
-  email: string;
-  is_verified: boolean;
-}
-
-interface Solicitud {
-  id: number;
-  user_email: string;
-  job_description: string;
-  location: string;
-  created_at: string;
-  status: string;
-}
+import toast from "react-hot-toast";
 
 export default function DashboardAdmin() {
-  const [profesionales, setProfesionales] = useState<Profesional[]>([]);
-  const [solicitudes, setSolicitudes] = useState<Solicitud[]>([]);
+  const [profesionalesPendientes, setProfesionalesPendientes] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchProfesionales = async () => {
+      setLoading(true);
       const { data, error } = await supabase
         .from("professionals")
-        .select("user_id, full_name, email, is_verified");
-
-      if (data) {
-        setProfesionales(data.filter(p => p.email && p.full_name));
-      } else {
-        console.error("Error al cargar profesionales:", error?.message);
-      }
-    };
-
-    const fetchSolicitudes = async () => {
-      const { data, error } = await supabase
-        .from("requests")
         .select("*")
-        .order("created_at", { ascending: false });
+        .eq("verificacion_status", "pendiente");
 
-      if (data) {
-        setSolicitudes(data);
+      if (error) {
+        console.error("❌ Error al cargar profesionales:", error.message);
+        toast.error("Error al cargar profesionales");
       } else {
-        console.error("Error al cargar solicitudes:", error?.message);
+        setProfesionalesPendientes(data);
       }
+      setLoading(false);
     };
 
     fetchProfesionales();
-    fetchSolicitudes();
   }, []);
 
+  const handleVerificar = async (user_id: string, status: string) => {
+    const action = status === "verificado" ? "Aprobar" : "Rechazar";
+    if (!confirm(`¿Estás seguro de que quieres ${action} a este profesional?`)) return;
+
+    const { error } = await supabase
+      .from("professionals")
+      .update({ verificacion_status: status })
+      .eq("user_id", user_id);
+
+    if (error) {
+      toast.error(`Error al ${action.toLowerCase()}: ${error.message}`);
+    } else {
+      toast.success(`Profesional ${action.toLowerCase()} con éxito`);
+      setProfesionalesPendientes((prev) =>
+        prev.filter((prof) => prof.user_id !== user_id)
+      );
+    }
+  };
+
   return (
-    <div className={styles.container}>
-      <h1>📊 Dashboard Admin</h1>
-      <section>
-        <h2>Profesionales Registrados</h2>
-        <ul>
-          {profesionales.map((p) => (
-            <li key={p.user_id}>
-              {p.full_name} - {p.email} - {p.is_verified ? "✅ Verificado" : "❌ No verificado"}
-            </li>
+    <div className={styles.dashboardContainer}>
+      <h1 className={styles.title}>📊 Panel del Administrador</h1>
+
+      {loading ? (
+        <p>🔄 Cargando profesionales pendientes...</p>
+      ) : profesionalesPendientes.length > 0 ? (
+        <div className={styles.profesionalesList}>
+          {profesionalesPendientes.map((prof) => (
+            <div key={prof.user_id} className={styles.profCard}>
+              <h3>{prof.full_name || "Sin nombre"}</h3>
+              <p>📧 Email: {prof.email}</p>
+              <p>📞 Teléfono: {prof.phone || "No registrado"}</p>
+              <p>📍 Localidad: {prof.location || "No registrada"}</p>
+              <div className={styles.actions}>
+                <button
+                  className={styles.approveButton}
+                  onClick={() => handleVerificar(prof.user_id, "verificado")}
+                >
+                  ✅ Aprobar
+                </button>
+                <button
+                  className={styles.rejectButton}
+                  onClick={() => handleVerificar(prof.user_id, "rechazado")}
+                >
+                  ❌ Rechazar
+                </button>
+              </div>
+            </div>
           ))}
-        </ul>
-      </section>
-      <section>
-        <h2>Solicitudes de Servicios</h2>
-        <ul>
-          {solicitudes.map((s) => (
-            <li key={s.id}>
-              {s.user_email} - {s.job_description} ({s.status})
-            </li>
-          ))}
-        </ul>
-      </section>
+        </div>
+      ) : (
+        <p>No hay profesionales pendientes de verificación.</p>
+      )}
     </div>
   );
 }

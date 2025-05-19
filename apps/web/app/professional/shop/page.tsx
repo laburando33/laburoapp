@@ -1,31 +1,31 @@
-'use client';
+"use client";
 
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase-web";
-import { useRouter } from "next/navigation";
+import styles from './shop.module.css';
 
 interface CreditPlan {
-  id: string;
+  id: number;
   plan_name: string;
   credits: number;
   price: number;
 }
 
-export default function ShopProfessionalPage() {
+export default function Shop() {
   const [plans, setPlans] = useState<CreditPlan[]>([]);
-  const [loading, setLoading] = useState(true);
-  const router = useRouter();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchPlans = async () => {
+      setLoading(true);
       const { data, error } = await supabase
-        .from("credit_purchases")
-        .select("id, plan_name, credits, price");
+        .from("credit_plans")
+        .select("*");
 
       if (error) {
-        console.error("Error cargando planes:", error.message);
+        console.error("❌ Error al cargar los planes de crédito:", error.message);
       } else {
-        setPlans(data || []);
+        setPlans(data);
       }
       setLoading(false);
     };
@@ -33,102 +33,55 @@ export default function ShopProfessionalPage() {
     fetchPlans();
   }, []);
 
-  const handleRealPurchase = async (plan: CreditPlan) => {
-    const { data: userData, error: userError } = await supabase.auth.getUser();
+  const handlePurchase = async (plan: CreditPlan) => {
+    setLoading(true);
 
-    if (userError || !userData?.user?.id) {
-      alert("Debes iniciar sesión");
+    const { data: userData } = await supabase.auth.getUser();
+    if (!userData.user) {
+      console.error("❌ Usuario no autenticado");
+      setLoading(false);
       return;
     }
 
-    const userId = userData.user.id;
+    const { error } = await supabase.from("credit_purchases").insert({
+      user_id: userData.user.id,
+      plan_name: plan.plan_name,
+      credits: plan.credits,
+      price: plan.price,
+      created_at: new Date().toISOString(),
+    });
 
-    // Primero, guardar en credit_purchases
-    const { error: purchaseError } = await supabase
-      .from("credit_purchases")
-      .insert({
-        user_id: userId,
-        credits: plan.credits,
-        price: plan.price,
-        plan_name: plan.plan_name,
-      });
-
-    if (purchaseError) {
-      console.error(purchaseError.message);
-      alert("Error al registrar la compra");
-      return;
-    }
-
-    // Luego, actualizar o crear en credits
-    const { data: existingCredits } = await supabase
-      .from("credits")
-      .select("*")
-      .eq("user_id", userId)
-      .maybeSingle();
-
-    if (existingCredits) {
-      // Si ya tiene créditos
-      await supabase
-        .from("credits")
-        .update({
-          total_credits: existingCredits.total_credits + plan.credits,
-        })
-        .eq("user_id", userId);
+    if (error) {
+      console.error("❌ Error al realizar la compra:", error.message);
     } else {
-      // Si no tiene, crear
-      await supabase
-        .from("credits")
-        .insert({
-          user_id: userId,
-          total_credits: plan.credits,
-          used_credits: 0,
-        });
+      alert("✅ Compra realizada exitosamente. Los créditos se añadirán en breve.");
     }
 
-    alert(`✅ Compraste ${plan.credits} créditos con éxito.`);
-
-    router.refresh();
+    setLoading(false);
   };
 
-  if (loading) return <p style={{ padding: "2rem" }}>Cargando...</p>;
-  if (plans.length === 0) return <p style={{ padding: "2rem" }}>No hay planes disponibles.</p>;
-
   return (
-    <div style={{ padding: "2rem" }}>
-      <h1>🛒 Comprar Créditos</h1>
-
-      <div style={{ display: "grid", gap: "1rem", marginTop: "1.5rem" }}>
-        {plans.map((plan) => (
-          <div
-            key={plan.id}
-            style={{
-              border: "1px solid #ddd",
-              padding: "1.5rem",
-              borderRadius: "8px",
-              background: "#ffffff",
-              boxShadow: "0 2px 4px rgba(0,0,0,0.05)"
-            }}
-          >
+    <div className={styles.shopContainer}>
+      <h2 className={styles.title}>Compra de Créditos</h2>
+      {loading && <p>Cargando planes...</p>}
+      {!loading && plans.length > 0 ? (
+        plans.map((plan) => (
+          <div key={plan.id} className={styles.planCard}>
             <h3>{plan.plan_name}</h3>
-            <p>🪙 {plan.credits} créditos</p>
-            <p>💵 ${plan.price}</p>
-            <button
-              onClick={() => handleRealPurchase(plan)}
-              style={{
-                marginTop: "1rem",
-                padding: "0.6rem 1rem",
-                background: "#ffd700",
-                border: "none",
-                borderRadius: "6px",
-                cursor: "pointer",
-                fontWeight: "bold"
-              }}
+            <p>{plan.credits} Créditos</p>
+            <p>${plan.price}</p>
+            <button 
+              onClick={() => handlePurchase(plan)} 
+              className={styles.purchaseButton}
+              disabled={loading}
             >
               Comprar
             </button>
           </div>
-        ))}
-      </div>
+        ))
+      ) : (
+        <p>No hay planes disponibles</p>
+      )}
     </div>
   );
 }

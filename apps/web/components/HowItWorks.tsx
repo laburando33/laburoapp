@@ -14,9 +14,7 @@ export default function DownloadApp() {
         viewport={{ once: true }}
         transition={{ duration: 0.8 }}
       >
-        {/* Subtítulo */}
- 
-        
+        {/* Subtítulo */}       
 
         {/* Contenido */}
         <div className={styles.content}>
@@ -50,10 +48,13 @@ export default function DownloadApp() {
                 <IoLogoApple size={28} />
                 App Store
               </motion.a>
+              
             </div>
+
           </div>
 
-    
+          <img src="/telefono-labura-con-laburandoapp12.png" alt="Labura con LaburandoApp" />
+
           
         </div>
       </motion.div>

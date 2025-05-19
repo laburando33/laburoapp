@@ -125,11 +125,28 @@
   margin-bottom: 2rem;
   text-align: center;
 }
-
+ .adminContent ul li a {
+  display: none;
+}
+.adminContent h2 {
+  display: none;
+}
+.adminContent ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
 /* Layout Styles */
 .adminLayout {
   display: flex;
   min-height: 100vh;
+}
+
+.adminLayout .sidebar a {
+  border-bottom: 1px solid #fcd03f;
+  display: block;
+  margin: 0.5rem 0.5rem;
+  padding: 0.5rem;
 }
 
 .sidebarWrapper {
@@ -138,11 +155,33 @@
   border-right: 1px solid #ddd;
   margin-top: 30px;
 }
-
+.adminContent button {
+  background: #fcd03f;
+  color: #000;
+  border: none;
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.7rem;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.adminContent p {
+  font-size: 0.9rem;
+  color: #555;
+}
 .adminContent {
   flex: 1;
   padding: 2rem;
   background: #f9f9f9;
+  margin-bottom: 30px;
+  
+}
+
+.adminContent label {
+  display: block;
+  margin: 20px 0 5px;
+  font-weight: bold;
 }
 
 .mobileNavContainer {
@@ -155,6 +194,9 @@
     flex-direction: column;
     align-items: center;
   }
+.adminLayout .sidebar a {
+  display: none ;
+}
 
   .cardList {
     grid-template-columns: 1fr;
@@ -167,6 +209,7 @@
   .adminContent {
     padding-bottom: 80px;
   }
+  
 
   .mobileNav {
     display: flex;
@@ -179,7 +222,7 @@
     border-top: 1px solid #ccc;
     z-index: 999;
   }
-
+ 
   .mobileNav a {
     font-weight: bold;
     font-size: 1rem;
@@ -196,6 +239,7 @@
   .sidebarWrapper {
     display: none;
   }
+
 }
 
 /* Action Buttons */
@@ -239,3 +283,4 @@
   background-color: #4caf50;
   color: white;
 }
+

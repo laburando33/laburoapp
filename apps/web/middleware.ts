@@ -15,13 +15,11 @@ export async function middleware(req: NextRequest) {
   const isLoginPage = url.pathname === "/login";
   const isAdminRoot = url.pathname === "/admin";
 
-  // 🔐 Usuario no logueado
   if (!isLoggedIn) {
     if (isLoginPage) return res;
     return NextResponse.redirect(new URL("/login?msg=auth", req.url));
   }
 
-  // ✅ Usuario logueado: buscamos perfil
   const { data: profile } = await supabase
     .from("professionals")
     .select("role")
@@ -29,15 +27,31 @@ export async function middleware(req: NextRequest) {
     .maybeSingle();
 
   if (!profile) {
-    return NextResponse.redirect(new URL("/login?msg=noprofile", req.url));
+    console.log("👤 Perfil no encontrado. Creando automáticamente...");
+
+    const { error } = await supabase.from("professionals").insert({
+      user_id: session.user.id,
+      email: session.user.email,
+      full_name: session.user.user_metadata.name || "",
+      phone: session.user.user_metadata.phone || "",
+      category: session.user.user_metadata.category || "",
+      is_verified: false,
+      role: "profesional",
+    });
+
+    if (error) {
+      console.error("❌ Error al crear el perfil automáticamente:", error.message);
+      return NextResponse.redirect(new URL("/login?msg=noprofile", req.url));
+    }
+
+    console.log("✅ Perfil creado exitosamente");
+    return NextResponse.redirect(new URL("/admin/profile", req.url));
   }
 
-  // 🚫 Usuario ya logueado, intenta ver /login
   if (isLoginPage) {
     return NextResponse.redirect(new URL("/admin", req.url));
   }
 
-  // 🚪 Ruta raíz de admin
   if (isAdminRoot) {
     return profile.role === "administrador"
       ? res

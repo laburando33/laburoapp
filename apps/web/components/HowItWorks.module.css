@@ -4,33 +4,27 @@
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
-    gap: 2rem;
-    padding: 10rem 2rem;
-    background-image: url('/fondo-laburandoap-descargar-app.png');
-    background-repeat: no-repeat; /* 🚫 No se repite */
-    background-size: cover;       /* ✅ Que cubra todo el hero */
-    background-position: center;  /* ✅ Centrado */
+    gap: 5rem;
+    padding: 2rem 0rem;
+    background-color: #fff;
   }
   
   .subtitle {
-    font-size: 1.1rem;
+    font-size:2rem;
     color: #555;
     margin-bottom: 1rem;
   }
   
-  .title {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #111;
-    background-color: #fff;
-    padding: 0.5rem 1rem;
+  .textSection h2 {
+    font-size: 2.5rem !important;
+    font-weight: 600;
+    color:#fcd93f;
     border-radius: 8px;
   }
   
   .content {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
     align-items: center;
     max-width: 1200px;
     margin: 0 auto;
@@ -40,13 +34,13 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1.5rem;
-    max-width: 500px;
+    max-width: 600px;
   }
   
   .description {
-    font-size: 1.1rem;
+    font-size: 1.5rem;
     color: #333;
+    text-align: center;
   }
   
   .buttons {
@@ -54,6 +48,7 @@
     gap: 1rem;
     flex-wrap: wrap;
     justify-content: center;
+    margin-top: 2rem;
   }
   
   .button {
@@ -96,9 +91,11 @@
       justify-content: center;
     }
   
-    .textSection {
-      align-items: flex-start;
-      text-align: left;
+   
+    .title {
+      font-size: 1.5rem !important;
+      padding: 0px;
+      text-align: center;
     }
   }
   

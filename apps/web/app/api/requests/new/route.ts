@@ -52,7 +52,7 @@ export async function POST(req: Request) {
     contents: {
       en: `Un cliente solicita: ${job_description}`,
     },
-    url: "https://tusitio.com/admin", // Puedes redirigir al panel profesional
+    url: "localhost:3000/admin", // Puedes redirigir al panel profesional
   };
 
   const resp = await fetch(ONESIGNAL_API_URL, {

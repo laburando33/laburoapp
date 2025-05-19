@@ -1,6 +1,7 @@
 .dashboardContainer {
     max-width: 1200px;
-    margin: 2rem auto;
+    margin-left: 25px;
+    margin-top: auto;
     padding: 2rem 1rem;
     background-color: #fff;
     border-radius: 12px;
@@ -9,9 +10,29 @@
     flex-direction: column;
     gap: 2rem;
   }
+  .dashboardContainer button {
+    background-color: #fcd03f;
+    border: none;
+    border-radius: 8px;
+    padding: 0.75rem 1.5rem;
+    color: #fff;
+    font-weight: 600;
+    font-family: Poppins;
+    margin-left: auto;
+    margin-top: 20px;
+  }
+  .dashboardContainer button:hover {
+    background-color: #ffaa00;
+  } 
+  .dashboardContainer h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #333;
+    text-align: center;
+  }
   
   .welcome {
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: 700;
     color: #333;
     text-align: center;

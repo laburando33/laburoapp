@@ -1,88 +1,79 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase-web";
-import { useCredits } from "@/components/context/CreditContext";
+import { SolicitudItem } from "@/components/SolicitudItem";
 import styles from "./DashboardPro.module.css";
-
-interface Profesional {
-  user_id: string;
-  full_name: string;
-  email: string;
-  verificacion_status: string;
-  category: string;
-  location: string;
-}
+import Link from "next/link";
 
 export default function DashboardPro({ userId }: { userId: string }) {
-  const { credits } = useCredits();
-  const [profile, setProfile] = useState<Profesional | null>(null);
+  const [solicitudes, setSolicitudes] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  const fetchProfile = async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      const { data, error } = await supabase
-        .from("professionals")
-        .select("*")
-        .eq("user_id", userId)
-        .single();
-
-      if (error) throw error;
-      setProfile(data);
-    } catch (err: any) {
-      console.error("❌ Error obteniendo el perfil:", err.message);
-      setError("Error al cargar el perfil.");
-    } finally {
-      setLoading(false);
-    }
-  };
+  const [credits, setCredits] = useState<number>(0);
 
   useEffect(() => {
-    fetchProfile();
+    const fetchSolicitudes = async () => {
+      setLoading(true);
+      try {
+        // 🗃️ Traer las solicitudes pendientes
+        const { data, error } = await supabase
+          .from("requests")
+          .select("*")
+          .eq("professional_id", userId);
 
-    // 🔄 Suscripción en tiempo real para detectar cambios en verificación
-    const subscription = supabase
-      .channel('public:professionals')
-      .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'professionals' }, (payload) => {
-        if (payload.new.user_id === userId) {
-          console.log("🔄 Actualización detectada:", payload.new);
-          setProfile(payload.new);
+        if (error) {
+          console.error("❌ Error al cargar solicitudes:", error.message);
+        } else {
+          setSolicitudes(data);
         }
-      })
-      .subscribe();
-
-    return () => {
-      supabase.removeChannel(subscription);
+      } catch (err: any) {
+        console.error("❌ Error al obtener solicitudes:", err.message);
+      } finally {
+        setLoading(false);
+      }
     };
+
+    const fetchCredits = async () => {
+      // 💳 Traer los créditos del profesional
+      const { data, error } = await supabase
+        .from("professional_credits")
+        .select("credits")
+        .eq("professional_id", userId)
+        .maybeSingle();
+
+      if (!error && data) {
+        setCredits(data.credits);
+      }
+    };
+
+    fetchSolicitudes();
+    fetchCredits();
   }, [userId]);
 
   return (
     <div className={styles.dashboardContainer}>
-      <h1 className={styles.title}>👋 ¡Hola, Profesional!</h1>
-
+      <div className={styles.header}>
+        <h2 className={styles.title}>💼 Tus Solicitudes de Trabajo</h2>
+        
+      </div>
+      <div className={styles.credits}>
+          Créditos disponibles: {credits}
+          <Link href="/professional/shop">
+            <button className={styles.buyCreditsButton}>
+              Comprar Créditos
+            </button>
+          </Link>
+        </div>
       {loading ? (
-        <p>⏳ Cargando perfil...</p>
-      ) : error ? (
-        <p className={styles.error}>{error}</p>
-      ) : profile ? (
-        <div className={styles.profileCard}>
-          <p><strong>Nombre:</strong> {profile.full_name}</p>
-          <p><strong>Correo:</strong> {profile.email}</p>
-          <p><strong>Créditos disponibles:</strong> {credits}</p>
-          <p><strong>Verificación:</strong> 
-            {" "}
-            {profile.verificacion_status === 'verificado' ? (
-              <span className="text-green-500">✅ Verificado</span>
-            ) : (
-              <span className="text-red-500">❌ No verificado</span>
-            )}
-          </p>
+        <p>🔄 Cargando solicitudes...</p>
+      ) : solicitudes.length > 0 ? (
+        <div className={styles.solicitudesList}>
+          {solicitudes.map((solicitud) => (
+            <SolicitudItem key={solicitud.id} solicitud={solicitud} userId={userId} />
+          ))}
         </div>
       ) : (
-        <p>No se pudo cargar el perfil.</p>
+        <p>📭 No tienes solicitudes en este momento.</p>
       )}
     </div>
   );

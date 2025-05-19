@@ -15,7 +15,7 @@ const testimonials = [
   },
   {
     name: "Ana Fernández",
-    comment: "Excelente servicio, prolijo y de confianza.",
+    comment: "Excelente servicio, prolijo, amable ... y de confianza.",
     rating: 5
   },
 ]
@@ -23,11 +23,10 @@ const testimonials = [
 export default function TestimonialsSection() {
   return (
     <section className={styles.section}>
-      <h2 className={styles.title}>Lo que opinan nuestros clientes</h2>
+      <h2 className={styles.title}>Los vecinos andan diciendo...</h2>
       <div className={styles.grid}>
         {testimonials.map((t, i) => (
           <div key={i} className={styles.card}>
-            <img src={t.avatar} alt={t.name} className={styles.avatar} />
             <p className={styles.comment}>"{t.comment}"</p>
             <div className={styles.rating}>
               {"★".repeat(t.rating)}

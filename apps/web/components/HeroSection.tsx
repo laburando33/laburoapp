@@ -3,13 +3,15 @@
 import { useState } from "react"
 import styles from "./HeroSection.module.css"
 import dynamic from "next/dynamic"
+import { ArrowRight } from 'lucide-react';
+
 
 const BudgetRequestModal = dynamic(() => import("../components/BudgetRequestModal"), { ssr: false })
 
 export default function HeroSection() {
   const [showModal, setShowModal] = useState(false)
 
-  return (
+      return (
     <>
       <section className={styles.hero}>
         <div className={styles.heroContent}>
@@ -40,7 +42,9 @@ export default function HeroSection() {
               className={styles.ctaModernButtonFull}
               onClick={() => setShowModal(true)}
             >
-              💬 Pedir Presupuesto ¡GRATIS!
+              Solicitar presupuesto  <span className={styles.iconCircle}>
+    <ArrowRight size={14}  />
+  </span>
             </button>
           </div>
             </div>

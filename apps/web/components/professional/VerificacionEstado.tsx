@@ -1,4 +1,3 @@
-// /components/professional/VerificacionEstado.tsx
 'use client';
 
 import { useEffect, useState } from "react";

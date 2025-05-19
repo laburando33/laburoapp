@@ -15,6 +15,7 @@ export default function ForgotPasswordPage() {
     e.preventDefault();
     setMensaje("⏳ Enviando correo de recuperación...");
 
+    // 🌐 Enviando solicitud para recuperar contraseña
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
       redirectTo: `${process.env.NEXT_PUBLIC_BASE_URL}/auth/callback`,
     });

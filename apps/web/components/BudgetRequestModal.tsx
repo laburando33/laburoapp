@@ -72,7 +72,7 @@ export default function BudgetRequestModal({ onClose }: { onClose: () => void })
     }
 
     setLoading(true);
-    let foto_url = null;
+    let foto_url: string | null = null;
 
     try {
       if (file) {
@@ -80,7 +80,6 @@ export default function BudgetRequestModal({ onClose }: { onClose: () => void })
         const { error: uploadError } = await supabase.storage
           .from("presupuestos")
           .upload(path, file, { upsert: true });
-
         if (uploadError) throw uploadError;
 
         const { data } = supabase.storage.from("presupuestos").getPublicUrl(path);
@@ -101,9 +100,9 @@ export default function BudgetRequestModal({ onClose }: { onClose: () => void })
         }])
         .select()
         .single();
-
       if (error) throw error;
 
+      // Notificación a profesionales
       await fetch("/api/reenviar-notificacion", {
         method: "POST",
         headers: { "Content-Type": "application/json" },

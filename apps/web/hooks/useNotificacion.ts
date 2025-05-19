@@ -1,35 +1,37 @@
-'use client';
-
 import { useCallback } from "react";
 
 export const useNotificacion = () => {
-  const enviarNotificacion = useCallback(
-    async (userId: string, titulo: string, mensaje: string) => {
-      try {
-        const res = await fetch("/api/notify-professional", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            userId,
-            title: titulo,
-            message: mensaje,
-          }),
-        });
+  const enviarNotificacion = useCallback(async (title: string, message: string, playerId: string) => {
+    try {
+      const response = await fetch("/api/notify-push", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          playerId,
+          title,
+          message,
+        }),
+      });
 
-        if (!res.ok) {
-          const data = await res.json();
-          throw new Error(data.error || "Error al enviar notificación");
-        }
-
-        console.log("🔔 Notificación enviada a:", userId);
-        return true;
-      } catch (err) {
-        console.error("❌ Error al enviar notificación:", err);
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("❌ Error al enviar notificación:", errorData.error);
         return false;
       }
-    },
-    []
-  );
 
-  return { enviarNotificacion };
+      console.log(`✅ Notificación enviada correctamente a ${playerId}`);
+      return true;
+    } catch (error: any) {
+      console.error("❌ Error en enviarNotificacion:", error.message);
+      return false;
+    }
+  }, []);
+
+  return {
+    enviarNotificacion,
+  };
 };
+//                 <th>Acciones</th>
+//               </tr>        

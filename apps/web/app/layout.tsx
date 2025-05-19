@@ -1,31 +1,37 @@
+// layout.tsx
 import "./globals.css";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
 import type { Metadata } from "next";
 import { Providers } from "./providers";
-import OneSignalInit from "../components/OneSignalInit";
+import LayoutWrapper from "@/components/LayoutWrapper";
+import OneSignalInit from "@/components/OneSignalInit";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
-import { Toaster } from "react-hot-toast"; // ✅ Agregamos Toaster
 
 export const metadata: Metadata = {
   title: "Laburando App",
   description: "Conectamos personas con profesionales del hogar",
-  icons: {
-    icon: "/bd1b3bf5-5842-449a-a3eb-c22346ed02dc.png",
-  },
+  icons: { icon: "/bd1b3bf5-5842-449a-a3eb-c22346ed02dc.png" },
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const supabase = createServerComponentClient({ cookies });
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
+  const { data: { session } } = await supabase.auth.getSession();
 
   return (
     <html lang="es">
       <head>
-        {/* Pixel de Meta */}
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="description" content="Conectamos personas con profesionales del hogar." />
+        <meta name="author" content="Laburando App" />
+        <meta name="keywords" content="servicios, profesionales, hogar, reparaciones, Laburando" />
+        
+        {/* ✅ Google Search Console */}
+        <meta
+          name="google-site-verification"
+          content="EgnbPWkr99s4ZQ4AtlzTVfsp0tEPQPozFo09sFFjBoY"
+        />
+
+        {/* ✅ Pixel de Meta (Facebook) */}
         <script
           dangerouslySetInnerHTML={{
             __html: `
@@ -51,21 +57,11 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             alt="facebook pixel"
           />
         </noscript>
-
-        {/* Google Search Console */}
-        <meta
-          name="google-site-verification"
-          content="EgnbPWkr99s4ZQ4AtlzTVfsp0tEPQPozFo09sFFjBoY"
-        />
       </head>
       <body className="layout">
+        <OneSignalInit /> {/* ✅ Inicialización Global */}
         <Providers initialSession={session}>
-          <OneSignalInit />
-          <Header />
-          <main className="main-content">{children}</main>
-          <Footer />
-          {/* ✅ Agregamos Toaster en todo el proyecto */}
-          <Toaster position="top-center" reverseOrder={false} />
+          <LayoutWrapper>{children}</LayoutWrapper>
         </Providers>
       </body>
     </html>

@@ -1,12 +1,14 @@
 .section {
     padding: 3rem 1.5rem;
-    background-color: #fff;
+    background-color: #FFD700;
   }
   
   .title {
     text-align: center;
     font-size: 2rem;
     margin-bottom: 2rem;
+    font-weight: 600;
+    color : #fff;
   }
   
   .grid {
@@ -31,6 +33,7 @@
     font-style: italic;
     margin-bottom: 1rem;
     color: #444;
+    font-size: larger;
   }
   
   .rating {

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { supabase } from "@/lib/supabase-web";
 import styles from "./SolicitudItem.module.css";
+import { useRouter } from "next/navigation";
 
 export default function SolicitudItem({ solicitud, userId }: { solicitud: any, userId: string }) {
   const [desbloqueado, setDesbloqueado] = useState(
@@ -11,32 +12,52 @@ export default function SolicitudItem({ solicitud, userId }: { solicitud: any, u
   const [loading, setLoading] = useState(false);
 
   const handleDesbloquear = async () => {
-    if (!confirm("¿Confirmás gastar 1 crédito para desbloquear los datos del cliente?")) return;
+    if (!confirm("¿Confirmás gastar 20 créditos para desbloquear los datos del cliente?")) return;
     setLoading(true);
 
-    const { error } = await fetch(`/api/desbloquear-solicitud`, {
-      method: "POST",
-      body: JSON.stringify({ solicitudId: solicitud.id, userId }),
-    }).then((res) => res.json());
+    try {
+      const response = await fetch(`/api/solicitudes/unlock`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ solicitudId: solicitud.id, profesionalId: userId }),
+      });
 
-    if (error) {
+      const data = await response.json();
+
+      if (!response.ok) {
+        alert(`Error al desbloquear: ${data.error}`);
+        console.error("❌ Error en desbloqueo:", data.error);
+      } else if (data.alreadyUnlocked) {
+        alert("Esta solicitud ya estaba desbloqueada.");
+      } else {
+        alert("Solicitud desbloqueada con éxito.");
+        setDesbloqueado(true);
+      }
+    } catch (error: any) {
+      console.error("❌ Error en la petición:", error.message);
       alert("Error al desbloquear: " + error.message);
-    } else {
-      setDesbloqueado(true);
+    } finally {
+      setLoading(false);
     }
-
-    setLoading(false);
   };
 
   return (
     <div className={styles.solicitudBox}>
       <h3>{solicitud.category || "Servicio"}</h3>
-      <p>📍 {solicitud.location}</p>
+      <h6>📅 Fecha: {new Date(solicitud.created_at).toLocaleDateString()}</h6>
+
+      <p>📍 <span>Localidad:</span> {solicitud.location}</p>
+      <p>📄 <span>Descripción:</span> {solicitud.job_description}</p>
+
+      <h6>Para desbloquear los datos de contacto del cliente:</h6>
+      <h5>💰 <span>Valor:</span> 20 créditos</h5>
 
       {desbloqueado ? (
         <>
-          <p>✉️ {solicitud.user_email}</p>
-          <p>📄 {solicitud.job_description}</p>
+          <p>✉️ <span>Email:</span> {solicitud.user_email}</p>
+          <p>📞 <span>Contacto:</span> {solicitud.contacto}</p>
         </>
       ) : (
         <button
@@ -44,7 +65,7 @@ export default function SolicitudItem({ solicitud, userId }: { solicitud: any, u
           onClick={handleDesbloquear}
           disabled={loading}
         >
-          {loading ? "Desbloqueando..." : "🔓 Desbloquear (1 crédito)"}
+          {loading ? "Desbloqueando..." : "🔓 Desbloquear Solicitud"}
         </button>
       )}
     </div>

@@ -1,9 +1,8 @@
-'use client';
+"use client";
 
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase-web";
-import styles from "@/styles/admin.module.css";
-import Link from "next/link";
+import styles from "./HistorialVerificacion.module.css";
 
 interface Historial {
   id: string;
@@ -12,17 +11,16 @@ interface Historial {
   email: string;
   status: string;
   verified_at: string;
+  certificado_url?: string;
+  dni_url?: string;
 }
 
 export default function HistorialVerificacionPage() {
   const [historial, setHistorial] = useState<Historial[]>([]);
-  const [filteredData, setFilteredData] = useState<Historial[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(10);
 
+  // ✅ Obtener historial de verificaciones
   const fetchHistorial = async () => {
     setLoading(true);
     setError(null);
@@ -33,107 +31,85 @@ export default function HistorialVerificacionPage() {
         .order("verified_at", { ascending: false });
 
       if (error) throw error;
+
       setHistorial(data || []);
-      setFilteredData(data || []);
     } catch (err: any) {
-      console.error("❌ Error obteniendo historial:", err.message);
-      setError("Error al cargar el historial.");
+      console.error("❌ Error al cargar historial:", err.message);
+      setError("No se pudo cargar el historial de verificaciones.");
     } finally {
       setLoading(false);
     }
   };
 
+  // 🔄 Cargar historial al montar el componente
   useEffect(() => {
     fetchHistorial();
   }, []);
 
-  // 🔍 Filtrar por nombre, email o estado
-  useEffect(() => {
-    const filtered = historial.filter((item) =>
-      item.full_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.status.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    setFilteredData(filtered);
-    setCurrentPage(1); // Reiniciar a la primera página cuando se filtra
-  }, [searchTerm, historial]);
-
-  // 🔄 Paginación
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = filteredData.slice(indexOfFirstItem, indexOfLastItem);
-
-  const totalPages = Math.ceil(filteredData.length / itemsPerPage);
-
   return (
-    <div className={styles.dashboardContainer}>
+    <div className={styles.container}>
       <h1 className={styles.title}>📜 Historial de Verificaciones</h1>
 
-      <input
-        type="text"
-        placeholder="🔍 Buscar por nombre, email o estado..."
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        className={styles.searchInput}
-      />
-
       {loading ? (
-        <div className={styles.loadingContainer}>
-          <p className={styles.loading}>⏳ Cargando...</p>
-        </div>
+        <p>Cargando...</p>
       ) : error ? (
-        <div className={styles.alert}>{error}</div>
-      ) : filteredData.length === 0 ? (
-        <div className={styles.alert}>No hay verificaciones en el historial.</div>
+        <p className={styles.error}>{error}</p>
+      ) : historial.length === 0 ? (
+        <p>No hay verificaciones registradas.</p>
       ) : (
-        <div className={styles.tableWrapper}>
-          <table className={styles.table}>
-            <thead>
-              <tr>
-                <th>Nombre</th>
-                <th>Email</th>
-                <th>Estado</th>
-                <th>Fecha de Verificación</th>
-                <th>Acciones</th>
+        <table className={styles.table}>
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Email</th>
+              <th>Estado</th>
+              <th>Fecha de Verificación</th>
+              <th>Certificado</th>
+              <th>DNI</th>
+            </tr>
+          </thead>
+          <tbody>
+            {historial.map((ver) => (
+              <tr key={ver.id}>
+                <td>{ver.full_name}</td>
+                <td>{ver.email}</td>
+                <td>
+                  {ver.status === "verificado" ? "✅ Verificado" : "❌ Rechazado"}
+                </td>
+                <td>{new Date(ver.verified_at).toLocaleString()}</td>
+                <td>
+                  {ver.certificado_url ? (
+                    <a
+                      href={ver.certificado_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={styles.link}
+                    >
+                      📄 Ver Certificado
+                    </a>
+                  ) : (
+                    "No disponible"
+                  )}
+                </td>
+                <td>
+                  {ver.dni_url ? (
+                    <a
+                      href={ver.dni_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={styles.link}
+                    >
+                      📸 Ver DNI
+                    </a>
+                  ) : (
+                    "No disponible"
+                  )}
+                </td>
               </tr>
-            </thead>
-            <tbody>
-              {currentItems.map((ver) => (
-                <tr key={ver.id}>
-                  <td>{ver.full_name}</td>
-                  <td>{ver.email}</td>
-                  <td>
-                    {ver.status === 'verificado' ? "✅ Verificado" : "❌ Rechazado"}
-                  </td>
-                  <td>{new Date(ver.verified_at).toLocaleString()}</td>
-                  <td>
-                    <div className={styles.actionButtons}>
-                      <Link href={`/admin/historial/${ver.id}`} className={styles.viewButton}>
-                        🔍 Ver
-                      </Link>
-                      <button className={styles.deleteButton}>
-                        ❌ Eliminar
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+            ))}
+          </tbody>
+        </table>
       )}
-
-      <div className={styles.pagination}>
-        {Array.from({ length: totalPages }, (_, index) => (
-          <button
-            key={index}
-            onClick={() => setCurrentPage(index + 1)}
-            className={index + 1 === currentPage ? styles.activePage : ""}
-          >
-            {index + 1}
-          </button>
-        ))}
-      </div>
     </div>
   );
 }

@@ -22,6 +22,7 @@ const categories = [
   { name: "Plomero", icon: "/icons/servicios-plomero-laburandoapp.png", reactIcon: IoWaterOutline },
   { name: "Vidriero", icon: "/icons/tec-matriculados.png", reactIcon: IoColorPalette },
   { name: "Fletes", icon: "/icons/mudanzas-camion-laburandoapp.png", reactIcon: IoCar },
+
 ]
 
 export default function CategoriesSection() {
@@ -38,7 +39,8 @@ export default function CategoriesSection() {
     <>
       <section className={styles.section}>
         <div className={styles.container}>
-          
+          <h2> <strong>¡Conecta con expertos!</strong> Rapido, seguro y de calidad.</h2>
+          <h4>Los más solicitados en el mercado.</h4>
           <div className={styles.grid}>
             {categories.map((category, i) => (
               <div key={i} className={styles.card} onClick={() => openModal(category.name)} style={{ cursor: "pointer" }}>
@@ -48,8 +50,8 @@ export default function CategoriesSection() {
                       <Image
                         src={category.icon}
                         alt={category.name}
-                        width={64}
-                        height={64}
+                        width={100}
+                        height={100}
                         className={`${styles.image} ${styles.jewelEffect}`}
                       />
                     </div>
@@ -66,13 +68,12 @@ export default function CategoriesSection() {
               </div>
             ))}
           </div>
-
-          {/* Botón adicional al final */}
-          <div className={styles.ctaContainer}>
-            <button className={styles.ctaButton} onClick={() => openModal("")}>
-               Nuestros servicios
-            </button>
+{/* Botón adicional al final */}
+           <div className={styles.ctaContainer}>
+            <a className={styles.ctaButton} onClick={() => openModal("")}>
+            Busca mas servicios            </a>
           </div>
+         
         </div>
       </section>
 

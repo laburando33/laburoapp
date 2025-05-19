@@ -15,7 +15,6 @@
   justify-content: center;
   gap: 2rem;
   flex-wrap: wrap;
-  margin-bottom: 63px;
 }
 
 .imageContainer {
@@ -42,44 +41,60 @@
 
 .heroTitle {
   font-size: 2.5rem;
-  margin-bottom: 1rem;
   color: #111;
-  font-weight: bold;
+  font-weight: 600;
 }
 
 .heroSubtitle {
-  font-size: 2rem;
-  color: #444;
-  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  color: #fff;
+  margin-bottom: 1rem;
   font-weight: 500;
+  text-align: center;
 }
 
 .heroSubtitle span {
   color: #fff;
-  text-transform: uppercase;
+
   font-weight: bold;
 }
 
 .searchSection {
-  display: flex;
   width: 100%;
+  text-align: center;
+}
+.searchSection span {
+  color: #fff;
+  font-size: 1rem;
+  font-weight:800;
 }
 
 .ctaModernButtonFull {
-  background-color: #000;
   color: #fff;
-  padding: 1rem;
-  border: none;
-  border-radius: 12px;
-  font-size: 1.1rem;
-  font-weight: 600;
+  padding: 0.3rem 0.8rem;
+  border-radius: 50px;
+  border: #fff solid 3px;
+  font-size: 1.3rem;
+  font-weight: 300;
   cursor: pointer;
-  width: 100%;
   text-align: center;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
   transition: all 0.3s ease-in-out;
+  font-family: poppins;
+  background: bottom;
 }
+.iconCircle {
+  margin-left: 5px;
+  
+  display: inline-flex;
 
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px
+}
 .ctaModernButtonFull:hover {
   transform: translateY(-2px) scale(1.02);
   background-color: #111;
@@ -100,16 +115,27 @@
     margin-bottom: 0px;
   }
   .heroSubtitle {
-    font-size: 1.6rem;
-  }
-  .heroSubtitle span {
-    font-size: 3.2rem;
-  }
-  .statusItem {
-display: none;  }
-.ctaModernButtonFull {
-    width: 80% ;
     font-size: 1rem;
+    margin-bottom: 0px;
+  }
+  
+  .heroSubtitle span {
+    font-size: 1rem;
+  }
+  
+  .statusItem {
+    height: 240px;
+    width: 200px;
+    margin: 0 auto;
+
+  }
+ 
+.ctaModernButtonFull {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  margin-bottom: 50px;
+  margin-top: 10px;
   } 
   .searchSection {
     flex-direction: column;

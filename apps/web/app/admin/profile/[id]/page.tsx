@@ -45,49 +45,56 @@ export default function AdminProfileView() {
     if (!id) return;
 
     const fetchData = async () => {
-      // Cargar perfil
-      const { data: profesionalData, error: errorPro } = await supabase
-        .from("professionals")
-        .select("*")
-        .eq("user_id", id)
-        .single();
+  console.log("🔍 Buscando profesional con ID:", id);
+  // Cargar perfil
+  const { data: profesionalData, error: errorPro } = await supabase
+    .from("professionals")
+    .select("*")
+    .eq("user_id", id)
+    .single();
 
-      if (errorPro) {
-        console.error("❌ Error cargando perfil:", errorPro.message);
-        return;
-      }
-      setProfesional(profesionalData);
+  if (errorPro || !profesionalData) {
+    console.error("❌ Error cargando perfil:", errorPro?.message || "No encontrado");
+    return;
+  }
+  setProfesional(profesionalData);
 
-      // Cargar historial de compras
-      const { data: comprasData } = await supabase
-        .from("credit_purchases")
-        .select("id, credits, price, created_at")
-        .eq("user_id", id)
-        .order("created_at", { ascending: false });
+  // Cargar historial de compras
+  const { data: comprasData, error: comprasError } = await supabase
+    .from("credit_purchases")
+    .select("id, credits, price, created_at")
+    .eq("user_id", id)
+    .order("created_at", { ascending: false });
 
-      setCompras(comprasData || []);
+  if (comprasError) console.error("❌ Error cargando compras:", comprasError.message);
+  setCompras(comprasData || []);
 
-      // Cargar historial de solicitudes
-      const { data: solicitudesData } = await supabase
-        .from("requests")
-        .select("id, job_description, category, location, created_at")
-        .eq("professional_id", id)
-        .order("created_at", { ascending: false })
-        .limit(10);
+  // Cargar historial de solicitudes
+  const { data: solicitudesData, error: solicitudesError } = await supabase
+    .from("requests")
+    .select("id, job_description, category, location, created_at")
+    .eq("professional_id", id) // <- Verifica este nombre en la DB
+    .order("created_at", { ascending: false })
+    .limit(10);
 
-      setSolicitudes(solicitudesData || []);
+  if (solicitudesError) console.error("❌ Error cargando solicitudes:", solicitudesError.message);
+  setSolicitudes(solicitudesData || []);
 
-      // Cargar créditos actuales
-      const { data: creditData } = await supabase
-        .from("credits")
-        .select("total_credits")
-        .eq("user_id", id)
-        .single();
+  // Cargar créditos actuales
+  const { data: creditData, error: creditError } = await supabase
+    .from("professional_credits")
+    .select("credits")
+    .eq("professional_id", id)
+    .single();
 
-      setCreditos(creditData?.total_credits || 0);
+  if (creditError) {
+    console.error("❌ Error cargando créditos:", creditError.message);
+  } else {
+    setCreditos(creditData?.credits || 0);
+  }
 
-      setLoading(false);
-    };
+  setLoading(false);
+};
 
     fetchData();
   }, [id]);
@@ -139,7 +146,7 @@ export default function AdminProfileView() {
 
       <div className={styles.purchases}>
         <h3>🪙 Créditos Disponibles</h3>
-        <p><strong>{creditos}</strong> créditos actuales</p>
+        <p><strong>{ creditos }</strong> créditos actuales</p>
       </div>
 
       <div className={styles.purchases}>

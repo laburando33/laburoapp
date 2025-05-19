@@ -1,178 +1,134 @@
 "use client";
 
-import styles from "./shop.module.css";
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase-web";
 import { useRouter } from "next/navigation";
 
-const plans = [
-  { id: 1, name: "Plan Básico", price: 35000, credits: 150, clients: "6 a 8" },
-  { id: 2, name: "Plan Intermedio", price: 50000, credits: 300, clients: "9 a 12", recommended: true },
-  { id: 3, name: "Plan Avanzado", price: 80000, credits: 500, clients: "16 a 25" },
-];
-
-function formatCurrency(value: number): string {
-  return value.toLocaleString("es-AR", {
-    style: "currency",
-    currency: "ARS",
-    maximumFractionDigits: 0,
-  });
+interface CreditPlan {
+  id: string;
+  plan_name: string;
+  credits: number;
+  price: number;
 }
 
-export default function ShopPage() {
-  const [userId, setUserId] = useState<string | null>(null);
-  const [coupon, setCoupon] = useState("");
-  const [discount, setDiscount] = useState(0);
-  const [useMock, setUseMock] = useState(false);
+export default function ShopProfessionalPage() {
+  const [plans, setPlans] = useState<CreditPlan[]>([]);
+  const [loading, setLoading] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
-    const init = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (user) setUserId(user.id);
-      setUseMock(process.env.NEXT_PUBLIC_USE_MOCK_PAYMENTS === "true");
+    const fetchPlans = async () => {
+      const { data, error } = await supabase
+        .from("credit_plans") // Aquí debería estar la lista de planes disponibles
+        .select("id, plan_name, credits, price");
+
+      if (error) {
+        console.error("Error cargando planes:", error.message);
+      } else {
+        setPlans(data || []);
+      }
+      setLoading(false);
     };
-    init();
+
+    fetchPlans();
   }, []);
 
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    if (params.get("success") === "true") {
-      const credits = Number(params.get("credits") || 0);
-      if (credits > 0 && userId) {
-        fetch("/api/credits/add", {
-          method: "POST",
-          body: JSON.stringify({ userId, credits }),
-        }).then(() => {
-          alert(`✅ Se te agregaron ${credits} créditos.`);
-          router.replace("/admin/shop");
-        });
-      }
-    }
-  }, [userId, router]);
+  const handleRealPurchase = async (plan: CreditPlan) => {
+    const { data: userData, error: userError } = await supabase.auth.getUser();
 
-  const handleValidateCoupon = async () => {
-    if (!coupon) return;
-
-    const { data, error } = await supabase
-      .from("discount_coupons")
-      .select("*")
-      .eq("code", coupon)
-      .eq("is_active", true)
-      .maybeSingle();
-
-    if (
-      error || !data ||
-      (data.expires_at && new Date(data.expires_at) < new Date()) ||
-      (data.max_uses && data.used_count >= data.max_uses)
-    ) {
-      alert("❌ Cupón inválido, vencido o agotado.");
-      setDiscount(0);
+    if (userError || !userData?.user?.id) {
+      alert("Debes iniciar sesión");
       return;
     }
 
-    setDiscount(data.discount_percentage);
-    alert(`✅ Cupón aplicado: ${data.discount_percentage}% de descuento`);
-  };
+    const userId = userData.user.id;
 
-  const handleBuy = async (plan: any) => {
-    if (!userId) return alert("No se detectó sesión");
-
-    const finalPrice = discount > 0
-      ? Math.round(plan.price * (1 - discount / 100))
-      : plan.price;
-
-    if (useMock) {
-      const confirm = window.confirm(`¿Simular la compra de ${plan.credits} créditos por ${formatCurrency(finalPrice)}?`);
-      if (!confirm) return;
-
-      await fetch("/api/credits/add", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userId, credits: plan.credits, price: finalPrice, plan_name: plan.name, coupon }),
-      });
-
-      const { data: prof } = await supabase
-        .from("professionals")
-        .select("full_name, email, phone, category")
-        .eq("user_id", userId)
-        .maybeSingle();
-
-      await supabase.from("credit_purchases").insert({
+    // Primero, guardar en credit_purchases para el historial de Admin
+    const { error: purchaseError } = await supabase
+      .from("credit_purchases")
+      .insert({
         user_id: userId,
         credits: plan.credits,
-        amount: finalPrice,
-        plan_name: plan.name,
-        coupon,
-        nombre: prof?.full_name || "—",
-        email: prof?.email || "—",
-        telefono: prof?.phone || "—",
-        servicio: prof?.category || "—",
+        price: plan.price,
+        plan_name: plan.plan_name,
       });
 
-      alert(`✅ Créditos simulados agregados: ${plan.credits}`);
-      router.refresh();
-    } else {
-      const res = await fetch("/api/payments/create-preference", {
-        method: "POST",
-        body: JSON.stringify({ title: plan.name, price: finalPrice, credits: plan.credits, userId, coupon }),
-      });
-
-      const { init_point } = await res.json();
-      window.location.href = init_point;
+    if (purchaseError) {
+      console.error(purchaseError.message);
+      alert("Error al registrar la compra");
+      return;
     }
+
+    // Luego, actualizar o crear en professional_credits
+    const { data: existingCredits } = await supabase
+      .from("professional_credits")
+      .select("*")
+      .eq("professional_id", userId)
+      .maybeSingle();
+
+    if (existingCredits) {
+      // Si ya tiene créditos, actualizamos
+      await supabase
+        .from("professional_credits")
+        .update({
+          credits: existingCredits.credits + plan.credits,
+        })
+        .eq("professional_id", userId);
+    } else {
+      // Si no tiene, lo creamos
+      await supabase
+        .from("professional_credits")
+        .insert({
+          professional_id: userId,
+          credits: plan.credits,
+          used_credits: 0,
+        });
+    }
+
+    // 🔄 Refrescamos la página para ver los cambios
+    alert(`✅ Compraste ${plan.credits} créditos con éxito.`);
+    router.refresh();
   };
 
+  if (loading) return <p style={{ padding: "2rem" }}>Cargando...</p>;
+  if (plans.length === 0) return <p style={{ padding: "2rem" }}>No hay planes disponibles.</p>;
+
   return (
-    <main className={styles.main}>
-      <h1 className={styles.title}>🛒 Comprar créditos</h1>
-      <p className={styles.subtitle}>Elegí un plan para acceder a más consultas</p>
+    <div style={{ padding: "2rem" }}>
+      <h1>🛒 Comprar Créditos</h1>
 
-      <div className={styles.couponContainer}>
-        <input
-          type="text"
-          placeholder="Código de descuento"
-          value={coupon}
-          onChange={(e) => setCoupon(e.target.value.toUpperCase())}
-          className={styles.couponInput}
-        />
-        <button onClick={handleValidateCoupon} className={styles.couponBtn}>
-          Aplicar
-        </button>
+      <div style={{ display: "grid", gap: "1rem", marginTop: "1.5rem" }}>
+        {plans.map((plan) => (
+          <div
+            key={plan.id}
+            style={{
+              border: "1px solid #ddd",
+              padding: "1.5rem",
+              borderRadius: "8px",
+              background: "#ffffff",
+              boxShadow: "0 2px 4px rgba(0,0,0,0.05)"
+            }}
+          >
+            <h3>{plan.plan_name}</h3>
+            <p>🪙 {plan.credits} créditos</p>
+            <p>💵 ${plan.price}</p>
+            <button
+              onClick={() => handleRealPurchase(plan)}
+              style={{
+                marginTop: "1rem",
+                padding: "0.6rem 1rem",
+                background: "#ffd700",
+                border: "none",
+                borderRadius: "6px",
+                cursor: "pointer",
+                fontWeight: "bold"
+              }}
+            >
+              Comprar
+            </button>
+          </div>
+        ))}
       </div>
-
-      {discount > 0 && (
-        <p className={styles.discountMsg}>
-          ✅ Cupón aplicado: {discount}% de descuento
-        </p>
-      )}
-
-      <div className={styles.plans}>
-        {plans.map((plan) => {
-          const discountedPrice = discount > 0
-            ? Math.round(plan.price * (1 - discount / 100))
-            : plan.price;
-
-          return (
-            <div key={plan.id} className={`${styles.card} ${plan.recommended ? styles.recommended : ""}`}>
-              <h2>{plan.name}</h2>
-              <p className={styles.price}>
-                {discount > 0 && (
-                  <span style={{ textDecoration: "line-through", marginRight: 8 }}>
-                    {formatCurrency(plan.price)}
-                  </span>
-                )}
-                {formatCurrency(discountedPrice)}
-              </p>
-              <p>{plan.credits} créditos</p>
-              <p>{plan.clients} posibles clientes</p>
-              <button onClick={() => handleBuy(plan)} className={styles.buyBtn}>
-                Comprar
-              </button>
-            </div>
-          );
-        })}
-      </div>
-    </main>
+    </div>
   );
 }

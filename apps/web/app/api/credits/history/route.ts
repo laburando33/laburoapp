@@ -1,6 +1,7 @@
 import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
+import { supabase } from "@/lib/supabase-web";
 
 export async function POST() {
   const supabase = createRouteHandlerClient({ cookies });
@@ -11,10 +12,11 @@ export async function POST() {
     return NextResponse.json({ success: false, error: "No autorizado" }, { status: 401 });
   }
 
+  // ✅ Validación adicional en Supabase para evitar manipulaciones
   const { data: profile } = await supabase
-    .from("professionals")
+    .from("profiles")
     .select("role")
-    .eq("user_id", user.id)
+    .eq("id", user.id)
     .maybeSingle();
 
   if (profile?.role !== "admin") {

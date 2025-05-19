@@ -1,4 +1,5 @@
-'use client';
+// ComprasAdmin.tsx
+"use client";
 
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase-web";
@@ -45,28 +46,6 @@ export default function ComprasAdmin() {
     );
   }, [filtroEmail, compras]);
 
-  const exportarCSV = () => {
-    const headers = ["Nombre", "Email", "Créditos", "Precio", "Fecha"];
-    const rows = filtradas.map((c) => [
-      `"${c.nombre || ""}"`,
-      `"${c.email || ""}"`,
-      c.credits,
-      c.price ?? 0,
-      `"${new Date(c.created_at).toLocaleString()}"`,
-    ]);
-
-    const csv = [headers, ...rows].map((row) => row.join(",")).join("\n");
-
-    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.setAttribute("download", "historial_compras.csv");
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
-
   return (
     <div className={styles.container}>
       <h1>💳 Historial de Compras</h1>
@@ -79,9 +58,6 @@ export default function ComprasAdmin() {
           onChange={(e) => setFiltroEmail(e.target.value)}
           className={styles.input}
         />
-        <button onClick={exportarCSV} className={styles.exportBtn}>
-          📤 Exportar CSV
-        </button>
       </div>
 
       {filtradas.length === 0 ? (

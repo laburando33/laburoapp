@@ -1,68 +1,107 @@
-'use client';
+// components/admin/MensajesAdmin.tsx
+"use client";
 
-import { useState } from 'react';
-import { supabase } from '@/lib/supabase-web';
-import styles from './MensajesAdmin.module.css';
+import { useState } from "react";
+import { useFetch } from "@/hooks/useFetch";
+import styles from "@/styles/admin.module.css";
 
-export default function MensajesAdmin() {
-  const [subject, setSubject] = useState('');
-  const [message, setMessage] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [status, setStatus] = useState<string | null>(null);
+const MensajesAdmin = () => {
+  // ✅ Traer los profesionales usando el hook reutilizable
+  const { data: profesionales, loading, error } = useFetch("professionals", {
+    orderBy: "full_name",
+    ascending: true,
+  });
 
-  const enviarMensajes = async () => {
-    if (!subject.trim() || !message.trim()) {
-      setStatus('⚠️ Completá asunto y mensaje.');
+  // ✅ Estados para controlar el formulario
+  const [selected, setSelected] = useState<string[]>([]);
+  const [asunto, setAsunto] = useState("");
+  const [mensaje, setMensaje] = useState("");
+  const [statusMessage, setStatusMessage] = useState("");
+  const [isSending, setIsSending] = useState(false);
+
+  // ✅ Enviar el mensaje
+  const handleSend = async () => {
+    if (!asunto || !mensaje || selected.length === 0) {
+      setStatusMessage("❌ Todos los campos son obligatorios.");
       return;
     }
 
-    setLoading(true);
-    setStatus(null);
+    setIsSending(true);
+    setStatusMessage("🔄 Enviando notificaciones...");
 
-    const { data, error } = await supabase.functions.invoke('email-masivo', {
-      body: { subject, message },
-    });
+    try {
+      const res = await fetch("/api/admin/enviar-mensajes", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ asunto, mensaje, recipients: selected }),
+      });
 
-    setLoading(false);
+      const result = await res.json();
 
-    if (error) {
-      console.error(error);
-      setStatus('❌ Error al enviar correos.');
-    } else {
-      setSubject('');
-      setMessage('');
-      setStatus(`✅ Correos enviados correctamente.`);
+      if (result.success) {
+        setStatusMessage("✅ Mensajes enviados correctamente.");
+        setAsunto("");
+        setMensaje("");
+        setSelected([]);
+      } else {
+        setStatusMessage(`❌ Error: ${result.error}`);
+      }
+    } catch (error) {
+      console.error("❌ Error al enviar mensajes:", error);
+      setStatusMessage("❌ Error al enviar los mensajes.");
+    } finally {
+      setIsSending(false);
     }
   };
 
+  if (loading) return <p className={styles.loading}>🔄 Cargando profesionales...</p>;
+  if (error) return <p className={styles.error}>❌ Error al cargar datos: {error}</p>;
+
   return (
-    <div className={styles.container}>
-      <h1>📬 Enviar Mail Masivo</h1>
+    <div className={styles.profileContainer}>
+      <h1 className={styles.title}>✉️ Enviar Mensajes Masivos</h1>
 
       <input
         type="text"
-        className={styles.input}
-        placeholder="Asunto del mensaje"
-        value={subject}
-        onChange={(e) => setSubject(e.target.value)}
+        placeholder="Asunto"
+        value={asunto}
+        onChange={(e) => setAsunto(e.target.value)}
+        className={styles.inputField}
       />
 
       <textarea
-        className={styles.textarea}
-        placeholder="Escribí tu mensaje aquí..."
-        value={message}
-        onChange={(e) => setMessage(e.target.value)}
+        placeholder="Mensaje"
+        value={mensaje}
+        onChange={(e) => setMensaje(e.target.value)}
+        className={styles.textArea}
       />
 
-      <button
-        onClick={enviarMensajes}
-        className={styles.sendBtn}
-        disabled={loading}
+      <select
+        multiple
+        className={styles.inputField}
+        onChange={(e) => {
+          const options = Array.from(e.target.selectedOptions, (option) => option.value);
+          setSelected(options);
+        }}
       >
-        {loading ? 'Enviando...' : '📤 Enviar a todos'}
+        {profesionales.map((p) => (
+          <option key={p.user_id} value={p.email}>
+            {p.full_name} — {p.email}
+          </option>
+        ))}
+      </select>
+
+      <button
+        onClick={handleSend}
+        className={styles.loginButton}
+        disabled={isSending || selected.length === 0}
+      >
+        {isSending ? "Enviando..." : "Enviar Mensajes"}
       </button>
 
-      {status && <p style={{ marginTop: '1rem' }}>{status}</p>}
+      {statusMessage && <p style={{ marginTop: "1rem" }}>{statusMessage}</p>}
     </div>
   );
-}
+};
+
+export default MensajesAdmin;

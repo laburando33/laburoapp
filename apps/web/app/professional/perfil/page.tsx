@@ -5,8 +5,7 @@ import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase-web";
 import AvatarUploader from "@/components/professional/AvatarUploader";
 import VerificacionProfesional from "@/components/professional/VerificacionProfesional";
-import styles from "@/components/professional/DashboardPro.module.css"; // O en tu nuevo profile.module.css si querés.
-
+import styles from "@/styles/DashboardPro.module.css";
 export default function ProfilePage() {
   const router = useRouter();
   const [perfil, setPerfil] = useState<any>(null);

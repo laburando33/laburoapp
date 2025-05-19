@@ -1,49 +1,28 @@
+// page.tsx
 "use client";
-import Image from 'next/image';
-
-import React, { useState, useEffect } from "react";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import {
-  IoSearch,
-  IoCashOutline,
-  IoScaleOutline,
-  IoCheckmarkCircleOutline,
-  IoHammer,
-  IoSnow,
-  IoBrush,
-  IoFlash,
-  IoLayers,
-  IoRainy,
-  IoColorPalette,
-  IoApps,
-  IoWifi,
-  IoCar,
-  IoFlame,
-  IoWater,
-  IoWaterOutline
-} from "react-icons/io5";
-import styles from "./page.module.css";
-import { supabase } from "../lib/supabase-web";
-import OneSignal from "react-onesignal";
-import CategoriesSection from "@/components/CategoriesSection";
+import { Suspense } from "react";
 import HeroSection from "@/components/HeroSection";
-import Modal from "@/components/Modal";
-import HowItWorks from "@/components/HowItWorks";
+import CategoriesSection from "@/components/CategoriesSection";
 import ServiceCarousel from "@/components/ServiceCarousel";
-import BudgetRequestModal from "@/components/BudgetRequestModal";
-import RecommendedSection from "@/components/RecommendedSection";
+import IconSlider from "@/components/IconSlider";
 import TestimonialsSection from "@/components/TestimonialsSection";
+import HowItWorks from "@/components/HowItWorks";
+import styles from "./page.module.css";
+
 export default function HomePage() {
   return (
     <div className={styles.page}>
       <main className={styles.main}>
-        <HeroSection />
-        
-        <ServiceCarousel />
-        <CategoriesSection />
-        <TestimonialsSection />
-        <HowItWorks />
+        <Suspense fallback={<p>🔄 Cargando...</p>}>
+          <HeroSection />
+          <CategoriesSection />
+          <ServiceCarousel />
+          <IconSlider />
+          <TestimonialsSection />
+          <HowItWorks />
+  
+
+        </Suspense>
       </main>
     </div>
   );

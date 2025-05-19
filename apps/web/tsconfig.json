@@ -6,11 +6,13 @@
     "paths": {
       "@/*": ["./*"],
       "@/components/*": ["./components/*"],
-      "@/utils/*": ["../packages/utils/*"],
-      "@repo/ui/*": ["../packages/ui/*"],
-      "@repo/utils/*": ["../packages/utils/*"],
-      "@repo/ui": ["./components/Header"],
-      "@lib/*": ["lib/*"]
+      "@/utils/*": ["../../packages/utils/*"],
+      "@repo/ui/*": ["../../packages/ui/*"],
+      "@repo/utils/*": ["../../packages/utils/*"],
+      "@repo/ui": ["../../packages/ui/*"],
+      "@lib/*": ["lib/*"],
+      "@/package/*": ["../../packages/*"],
+      "@utils/*": ["../../packages/utils/*"]
     },
     "plugins": [
       {

@@ -1,8 +1,14 @@
 .dashboardContainer {
-  padding: 2rem;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 20px auto;
+}
+
+.header {
   display: flex;
-  flex-direction: column;
-  gap: 2rem;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
 .title {
@@ -11,59 +17,30 @@
   color: #333;
 }
 
-.infoBox {
-  background-color: #fcd03f;
-  padding: 1rem;
-  border-radius: 8px;
-  text-align: center;
+.credits {
+  font-size: 18px;
   color: black;
-  font-weight: bold;
-  font-size: 1.5rem;
+  margin-bottom: 20px;
 }
 
-.motivationalBox {
-  background-color: #fff8dc;
-  padding: 1rem;
-  border-radius: 8px;
-  text-align: center;
-  color: #555;
-  font-size: 1.1rem;
-  font-style: italic;
-  transition: opacity 0.5s ease;
-}
-
-.actions {
-  display: flex;
-  justify-content: center;
-}
-
-.shopButton {
+.buyCreditsButton {
   background-color: #fcd03f;
-  padding: 0.75rem 1.5rem;
+  color: rgb(255, 253, 253);
   border-radius: 8px;
-  font-weight: bold;
-  text-decoration: none;
-  color: #000;
-  transition: background 0.3s ease;
-}
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
+  margin-left: 20px;
+  }
 
-.shopButton:hover {
+.buyCreditsButton:hover {
   background-color: #ffaa00;
 }
 
-.subTitle {
-  font-size: 1.5rem;
-  margin-top: 2rem;
-  font-weight: bold;
-  color: #444;
-}
-
-.solicitudesGrid {
+.solicitudesList {
   display: grid;
-  gap: 1rem;
-}
-@media (max-width: 768px) {
-  .sidebarWrapper {
-    display: none;
-  }
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 15px;
 }

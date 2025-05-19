@@ -1,21 +1,27 @@
 .carouselSection {
-    padding: 4rem;
+    padding: 0rem 4rem;
     text-align: center;     
     font-family: poppins, sans-serif;
     font-size: 1rem;
-    margin-top: 30px;
-    margin-bottom: 30px;
+    margin-bottom: 100px;
     background-size: cover;
     background-position: center;
   }
 
-  .carrouselSection h2 {
-    font-size: 2.5rem;
+  .carouselSection h2 {
+    font-size: 2.0rem;
     margin-bottom: 1rem;
-    color: #111;
-    font-weight: bold;
+    color:black ;
+    text-align: center;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    display: inline-block;
+    font-weight: 300;
   }
-  
+  .carouselSection h2 strong {
+    font-weight: 600;
+    color: #fcd03f;
+  }
   
   .carousel {
     display: flex;
@@ -49,13 +55,14 @@
   
   .action {
     margin-top: 0.5rem;
-    background-color: #ffaa00;
+    background-color: #fcd03f;
     color: #fff;
     border: none;
     padding: 0.6rem 1.2rem;
     border-radius: 8px;
-    font-weight: bold;
+    font-weight: 500;
     cursor: pointer;
+    font-family: poppins, sans-serif;
   }
   
   .action:hover {
@@ -85,12 +92,26 @@
     height: 160px;
     object-fit: cover;
   }
-  
-  .serviceinfo {
-    padding: 1rem;
+  .info {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+    color: black;
     text-align: center;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    display: inline-block;
+    font-weight: 300;
   }
-  
+  .info p {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    color: black;
+    text-align: center;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    display: inline-block;
+    font-weight: 300;
+  }
   .serviceaction {
     margin-top: 0.5rem;
     background-color: #0070f3;

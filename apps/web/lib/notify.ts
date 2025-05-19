@@ -1,42 +1,61 @@
-import { supabase } from "./supabase-web"
-import { sendNotification } from "./sendNotification"
+import { NextResponse } from "next/server";
+import { createClient } from "@supabase/supabase-js";
+import { sendNotification } from "@packages/utils/sendNotification";
 
-interface PresupuestoRequest {
-  id: string
-  servicio: string
-  ubicacion: string
-}
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.SUPABASE_SERVICE_ROLE_KEY!
+);
 
-export async function notifyProfessionals(presupuesto: PresupuestoRequest) {
-  const { servicio, ubicacion } = presupuesto
+export async function POST(req: Request) {
+  try {
+    const { requestId } = await req.json();
 
-  // Buscar profesionales verificados que coincidan con el servicio y zona
-  const { data: profesionales, error } = await supabase
-    .from("profiles")
-    .select("id, external_user_id")
-    .eq("tipo_servicio", servicio)
-    .eq("zona_trabajo", ubicacion)
-    .eq("estado", "verificado")
+    const { data: request } = await supabase
+      .from("requests")
+      .select("*")
+      .eq("id", requestId)
+      .maybeSingle();
 
-  if (error) {
-    console.error("❌ Error al buscar profesionales:", error.message)
-    return
+    if (!request) {
+      return NextResponse.json({ error: "Solicitud no encontrada" }, { status: 404 });
+    }
+
+    // Buscar profesionales de esa categoría
+    const { data: professionals } = await supabase
+      .from("professional_services")
+      .select("professional_id")
+      .eq("service_id", request.category);
+
+    if (!professionals || professionals.length === 0) {
+      return NextResponse.json({ error: "No hay profesionales en esa categoría" });
+    }
+
+    // Obtener los IDs de los profesionales
+    const professionalIds = professionals.map((p) => p.professional_id);
+
+    // Obtener los externalUserIds para OneSignal
+    const { data: profiles } = await supabase
+      .from("professionals")
+      .select("external_user_id")
+      .in("user_id", professionalIds);
+
+    const externalUserIds = profiles.map((p) => p.external_user_id).filter(Boolean);
+
+    if (externalUserIds.length > 0) {
+      await sendNotification({
+        title: "Nueva solicitud disponible",
+        message: `Un cliente solicita: ${request.job_description} en ${request.location}`,
+        url: "https://laburando.com/solicitudes",
+        externalUserIds
+      });
+    }
+
+    console.log(`📣 Notificar a profesionales: ${externalUserIds.join(", ")}`);
+
+    return NextResponse.json({ success: true, notified: externalUserIds });
+  } catch (err: any) {
+    console.error("❌ Error en el envío de notificaciones:", err.message);
+    return NextResponse.json({ error: "Error al enviar notificaciones" }, { status: 500 });
   }
-
-  const userIds = (profesionales || [])
-    .map((p) => p.external_user_id)
-    .filter((id) => !!id)
-
-  if (userIds.length === 0) {
-    console.log("ℹ️ No hay profesionales verificados con external_user_id para notificar")
-    return
-  }
-
-  await sendNotification({
-    title: "📩 Nueva solicitud en tu zona",
-    message: `Hay un pedido de presupuesto para ${servicio} en ${ubicacion}.`,
-    externalUserIds: userIds,
-  })
-
-  console.log(`✅ Notificación enviada a ${userIds.length} profesionales`)
 }

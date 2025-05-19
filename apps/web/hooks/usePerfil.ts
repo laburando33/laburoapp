@@ -1,61 +1,48 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase-web";
-import { useUser } from "@supabase/auth-helpers-react";
 
-export function usePerfil() {
-  const user = useUser();
-  const [perfil, setPerfil] = useState(null);
+interface Perfil {
+  id: string;
+  full_name: string;
+  email: string;
+  phone: string;
+  category: string;
+  location: string;
+  verificacion_status: string;
+}
+
+export const usePerfil = (userId: string | null) => {
+  const [perfil, setPerfil] = useState<Perfil | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!user) return;
+    if (!userId) {
+      setLoading(false);
+      return;
+    }
 
     const fetchPerfil = async () => {
       setLoading(true);
-      setError(null);
+      try {
+        const { data, error } = await supabase
+          .from("professionals")
+          .select("*")
+          .eq("user_id", userId)
+          .maybeSingle();
 
-      const { data, error: fetchError } = await supabase
-        .from("professionals")
-        .select("*")
-        .eq("user_id", user.id)
-        .maybeSingle();
-
-      if (fetchError) {
-        setError("Error al obtener el perfil.");
-        console.error("❌ Error cargando perfil:", fetchError);
-        setLoading(false);
-        return;
-      }
-
-      if (!data) {
-        const { data: inserted, error: insertError } = await supabase.from("professionals").insert({
-          user_id: user.id,
-          email: user.email,
-          full_name: user.user_metadata?.full_name ?? "",
-          avatar_url: user.user_metadata?.avatar_url ?? "",
-          role: "profesional",
-          is_verified: false,
-          verificacion_status: "pendiente",
-        }).select().maybeSingle();
-
-        if (insertError) {
-          setError("Error al crear perfil inicial.");
-          console.error("❌ Error creando perfil:", insertError);
-          setLoading(false);
-          return;
-        }
-
-        setPerfil(inserted);
-      } else {
+        if (error) throw error;
         setPerfil(data);
+      } catch (err: any) {
+        console.error("❌ Error obteniendo perfil:", err.message);
+        setError(err.message);
+      } finally {
+        setLoading(false);
       }
-
-      setLoading(false);
     };
 
     fetchPerfil();
-  }, [user]);
+  }, [userId]);
 
   return { perfil, loading, error };
-}
+};

@@ -30,14 +30,7 @@ const nextConfig = {
     NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
   },
 
-  async rewrites() {
-    return [
-      {
-        source: '/api/prompts',
-        destination: 'https://extensions.aitopia.ai/ai/prompts',
-      },
-    ];
-  },
+ 
 };
 
 module.exports = withExpo(nextConfig);
