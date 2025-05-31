@@ -1,0 +1,1197 @@
+./
+    README.md (0.00 MB) [.md]
+    app.json (0.00 MB) [.json]
+    eas.json (0.00 MB) [.json]
+    estructura.txt (0.00 MB) [.txt]
+    package-lock.json (0.84 MB) [.json]
+    package.json (0.00 MB) [.json]
+    tsconfig.base.json (0.00 MB) [.json]
+    turbo.json (0.00 MB) [.json]
+
+.\.vercel/
+    README.txt (0.00 MB) [.txt]
+    project.json (0.00 MB) [.json]
+
+.\apps/
+
+.\apps\docs/
+    README.md (0.00 MB) [.md]
+    eslint.config.js (0.00 MB) [.js]
+    next-env.d.ts (0.00 MB) [.ts]
+    next.config.js (0.00 MB) [.js]
+    package.json (0.00 MB) [.json]
+    tsconfig.json (0.00 MB) [.json]
+
+.\apps\docs\app/
+    globals.css (0.00 MB) [.css]
+    layout.tsx (0.00 MB) [.tsx]
+    page.module.css (0.00 MB) [.css]
+    page.tsx (0.00 MB) [.tsx]
+
+.\apps\docs\app\fonts/
+
+.\apps\docs\public/
+
+.\apps\mobile/
+    App.tsx (0.00 MB) [.tsx]
+    AuthProvider.tsx (0.00 MB) [.tsx]
+    app.config.js (0.00 MB) [.js]
+    babel.config.js (0.00 MB) [.js]
+    eas.json (0.00 MB) [.json]
+    index.ts (0.00 MB) [.ts]
+    linking.ts (0.00 MB) [.ts]
+    metro.config.js (0.00 MB) [.js]
+    navigationRef.ts (0.00 MB) [.ts]
+    package.json (0.00 MB) [.json]
+    roleRedirect.ts (0.00 MB) [.ts]
+    tsconfig.json (0.00 MB) [.json]
+
+.\apps\mobile\%ProgramData%/
+
+.\apps\mobile\%ProgramData%\Microsoft/
+
+.\apps\mobile\%ProgramData%\Microsoft\Windows/
+
+.\apps\mobile\%ProgramData%\Microsoft\Windows\UUS/
+
+.\apps\mobile\%ProgramData%\Microsoft\Windows\UUS\State/
+
+.\apps\mobile\.expo/
+    README.md (0.00 MB) [.md]
+    devices.json (0.00 MB) [.json]
+
+.\apps\mobile\.expo\metro/
+    polyfill.js (0.00 MB) [.js]
+    polyfill.native.js (0.00 MB) [.js]
+
+.\apps\mobile\.expo\metro\externals/
+
+.\apps\mobile\.expo\metro\externals\assert/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\.expo\metro\externals\async_hooks/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\.expo\metro\externals\buffer/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\.expo\metro\externals\child_process/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\.expo\metro\externals\cluster/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\.expo\metro\externals\console/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\.expo\metro\externals\constants/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\.expo\metro\externals\crypto/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\.expo\metro\externals\dgram/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\.expo\metro\externals\diagnostics_channel/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\.expo\metro\externals\dns/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\.expo\metro\externals\domain/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\.expo\metro\externals\events/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\.expo\metro\externals\fs/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\.expo\metro\externals\fs\promises/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\.expo\metro\externals\http/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\.expo\metro\externals\http2/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\.expo\metro\externals\https/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\.expo\metro\externals\inspector/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\.expo\metro\externals\module/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\.expo\metro\externals\net/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\.expo\metro\externals\os/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\.expo\metro\externals\path/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\.expo\metro\externals\perf_hooks/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\.expo\metro\externals\process/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\.expo\metro\externals\punycode/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\.expo\metro\externals\querystring/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\.expo\metro\externals\readline/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\.expo\metro\externals\repl/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\.expo\metro\externals\stream/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\.expo\metro\externals\string_decoder/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\.expo\metro\externals\timers/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\.expo\metro\externals\tls/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\.expo\metro\externals\trace_events/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\.expo\metro\externals\tty/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\.expo\metro\externals\url/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\.expo\metro\externals\util/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\.expo\metro\externals\v8/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\.expo\metro\externals\vm/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\.expo\metro\externals\wasi/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\.expo\metro\externals\worker_threads/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\.expo\metro\externals\zlib/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\.expo\metro\shims/
+
+.\apps\mobile\.expo\metro\shims\react-native-web/
+
+.\apps\mobile\.expo\metro\shims\react-native-web\dist/
+
+.\apps\mobile\.expo\metro\shims\react-native-web\dist\cjs/
+
+.\apps\mobile\.expo\metro\shims\react-native-web\dist\cjs\exports/
+
+.\apps\mobile\.expo\metro\shims\react-native-web\dist\cjs\exports\AppRegistry/
+    AppContainer.js (0.00 MB) [.js]
+
+.\apps\mobile\.expo\metro\shims\react-native-web\dist\cjs\exports\BackHandler/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\.expo\metro\shims\react-native-web\dist\exports/
+
+.\apps\mobile\.expo\metro\shims\react-native-web\dist\exports\AppRegistry/
+    AppContainer.js (0.00 MB) [.js]
+
+.\apps\mobile\.expo\metro\shims\react-native-web\dist\exports\BackHandler/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\.expo\web/
+
+.\apps\mobile\.expo\web\cache/
+
+.\apps\mobile\.expo\web\cache\production/
+
+.\apps\mobile\.expo\web\cache\production\images/
+
+.\apps\mobile\.expo\web\cache\production\images\android-adaptive-foreground/
+
+.\apps\mobile\.expo\web\cache\production\images\android-adaptive-foreground\android-adaptive-foreground-feef1f2600268f1a917b8aa6e8ba5488cc56ee01f9b6b79b51d5fd0ee1fabee7-cover-transparent/
+
+.\apps\mobile\.expo\web\cache\production\images\android-standard-square/
+
+.\apps\mobile\.expo\web\cache\production\images\android-standard-square\android-standard-square-feef1f2600268f1a917b8aa6e8ba5488cc56ee01f9b6b79b51d5fd0ee1fabee7-cover-transparent/
+
+.\apps\mobile\.expo\web\cache\production\images\splash-android/
+
+.\apps\mobile\.expo\web\cache\production\images\splash-android\splash-android-356ac06ac40818dddbbb117f5dc7615230cc17633766978e4757de7adb17ae0a-contain/
+
+.\apps\mobile\android/
+
+.\apps\mobile\android\app/
+
+.\apps\mobile\android\app\src/
+
+.\apps\mobile\android\app\src\debug/
+
+.\apps\mobile\android\app\src\main/
+
+.\apps\mobile\android\app\src\main\java/
+
+.\apps\mobile\android\app\src\main\java\com/
+
+.\apps\mobile\android\app\src\main\java\com\laburando/
+
+.\apps\mobile\android\app\src\main\java\com\laburando\app/
+
+.\apps\mobile\android\app\src\main\res/
+
+.\apps\mobile\android\app\src\main\res\drawable/
+
+.\apps\mobile\android\app\src\main\res\drawable-hdpi/
+
+.\apps\mobile\android\app\src\main\res\drawable-mdpi/
+
+.\apps\mobile\android\app\src\main\res\drawable-xhdpi/
+
+.\apps\mobile\android\app\src\main\res\drawable-xxhdpi/
+
+.\apps\mobile\android\app\src\main\res\drawable-xxxhdpi/
+
+.\apps\mobile\android\app\src\main\res\mipmap-anydpi-v26/
+
+.\apps\mobile\android\app\src\main\res\mipmap-hdpi/
+
+.\apps\mobile\android\app\src\main\res\mipmap-mdpi/
+
+.\apps\mobile\android\app\src\main\res\mipmap-xhdpi/
+
+.\apps\mobile\android\app\src\main\res\mipmap-xxhdpi/
+
+.\apps\mobile\android\app\src\main\res\mipmap-xxxhdpi/
+
+.\apps\mobile\android\app\src\main\res\values/
+
+.\apps\mobile\android\app\src\main\res\values-night/
+
+.\apps\mobile\android\gradle/
+
+.\apps\mobile\android\gradle\wrapper/
+
+.\apps\mobile\app/
+    index.tsx (0.00 MB) [.tsx]
+    layout.tsx (0.00 MB) [.tsx]
+
+.\apps\mobile\app\(auth)/
+
+.\apps\mobile\app\(client)/
+
+.\apps\mobile\app\(partner)/
+
+.\apps\mobile\assets/
+
+.\apps\mobile\assets\users/
+
+.\apps\mobile\components/
+    Header.tsx (0.00 MB) [.tsx]
+    MobileHeader.tsx (0.00 MB) [.tsx]
+
+.\apps\mobile\constants/
+    roles.ts (0.00 MB) [.ts]
+
+.\apps\mobile\context/
+    AuthProvider.tsx (0.00 MB) [.tsx]
+
+.\apps\mobile\hooks/
+    useProtectedRoute.ts (0.00 MB) [.ts]
+
+.\apps\mobile\inspect.tar.gz/
+    README.md (0.00 MB) [.md]
+    app.json (0.00 MB) [.json]
+    eas.json (0.00 MB) [.json]
+    package-lock.json (0.82 MB) [.json]
+    package.json (0.00 MB) [.json]
+    tsconfig.base.json (0.00 MB) [.json]
+    turbo.json (0.00 MB) [.json]
+
+.\apps\mobile\inspect.tar.gz\apps/
+
+.\apps\mobile\inspect.tar.gz\apps\docs/
+    README.md (0.00 MB) [.md]
+    eslint.config.js (0.00 MB) [.js]
+    next-env.d.ts (0.00 MB) [.ts]
+    next.config.js (0.00 MB) [.js]
+    package.json (0.00 MB) [.json]
+    tsconfig.json (0.00 MB) [.json]
+
+.\apps\mobile\inspect.tar.gz\apps\docs\app/
+    globals.css (0.00 MB) [.css]
+    layout.tsx (0.00 MB) [.tsx]
+    page.module.css (0.00 MB) [.css]
+    page.tsx (0.00 MB) [.tsx]
+
+.\apps\mobile\inspect.tar.gz\apps\docs\app\fonts/
+
+.\apps\mobile\inspect.tar.gz\apps\docs\public/
+
+.\apps\mobile\inspect.tar.gz\apps\mobile/
+    App.tsx (0.00 MB) [.tsx]
+    AuthProvider.tsx (0.00 MB) [.tsx]
+    app.config.js (0.00 MB) [.js]
+    babel.config.js (0.00 MB) [.js]
+    eas.json (0.00 MB) [.json]
+    index.ts (0.00 MB) [.ts]
+    linking.ts (0.00 MB) [.ts]
+    metro.config.js (0.00 MB) [.js]
+    navigationRef.ts (0.00 MB) [.ts]
+    package.json (0.00 MB) [.json]
+    roleRedirect.ts (0.00 MB) [.ts]
+    tsconfig.json (0.00 MB) [.json]
+
+.\apps\mobile\inspect.tar.gz\apps\mobile\%ProgramData%/
+
+.\apps\mobile\inspect.tar.gz\apps\mobile\%ProgramData%\Microsoft/
+
+.\apps\mobile\inspect.tar.gz\apps\mobile\%ProgramData%\Microsoft\Windows/
+
+.\apps\mobile\inspect.tar.gz\apps\mobile\%ProgramData%\Microsoft\Windows\UUS/
+
+.\apps\mobile\inspect.tar.gz\apps\mobile\%ProgramData%\Microsoft\Windows\UUS\State/
+
+.\apps\mobile\inspect.tar.gz\apps\mobile\.expo/
+    README.md (0.00 MB) [.md]
+    devices.json (0.00 MB) [.json]
+
+.\apps\mobile\inspect.tar.gz\apps\mobile\.expo\metro/
+    polyfill.js (0.00 MB) [.js]
+    polyfill.native.js (0.00 MB) [.js]
+
+.\apps\mobile\inspect.tar.gz\apps\mobile\.expo\metro\externals/
+
+.\apps\mobile\inspect.tar.gz\apps\mobile\.expo\metro\externals\assert/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\inspect.tar.gz\apps\mobile\.expo\metro\externals\async_hooks/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\inspect.tar.gz\apps\mobile\.expo\metro\externals\buffer/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\inspect.tar.gz\apps\mobile\.expo\metro\externals\child_process/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\inspect.tar.gz\apps\mobile\.expo\metro\externals\cluster/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\inspect.tar.gz\apps\mobile\.expo\metro\externals\console/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\inspect.tar.gz\apps\mobile\.expo\metro\externals\constants/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\inspect.tar.gz\apps\mobile\.expo\metro\externals\crypto/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\inspect.tar.gz\apps\mobile\.expo\metro\externals\dgram/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\inspect.tar.gz\apps\mobile\.expo\metro\externals\diagnostics_channel/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\inspect.tar.gz\apps\mobile\.expo\metro\externals\dns/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\inspect.tar.gz\apps\mobile\.expo\metro\externals\domain/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\inspect.tar.gz\apps\mobile\.expo\metro\externals\events/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\inspect.tar.gz\apps\mobile\.expo\metro\externals\fs/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\inspect.tar.gz\apps\mobile\.expo\metro\externals\fs\promises/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\inspect.tar.gz\apps\mobile\.expo\metro\externals\http/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\inspect.tar.gz\apps\mobile\.expo\metro\externals\http2/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\inspect.tar.gz\apps\mobile\.expo\metro\externals\https/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\inspect.tar.gz\apps\mobile\.expo\metro\externals\inspector/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\inspect.tar.gz\apps\mobile\.expo\metro\externals\module/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\inspect.tar.gz\apps\mobile\.expo\metro\externals\net/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\inspect.tar.gz\apps\mobile\.expo\metro\externals\os/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\inspect.tar.gz\apps\mobile\.expo\metro\externals\path/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\inspect.tar.gz\apps\mobile\.expo\metro\externals\perf_hooks/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\inspect.tar.gz\apps\mobile\.expo\metro\externals\process/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\inspect.tar.gz\apps\mobile\.expo\metro\externals\punycode/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\inspect.tar.gz\apps\mobile\.expo\metro\externals\querystring/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\inspect.tar.gz\apps\mobile\.expo\metro\externals\readline/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\inspect.tar.gz\apps\mobile\.expo\metro\externals\repl/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\inspect.tar.gz\apps\mobile\.expo\metro\externals\stream/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\inspect.tar.gz\apps\mobile\.expo\metro\externals\string_decoder/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\inspect.tar.gz\apps\mobile\.expo\metro\externals\timers/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\inspect.tar.gz\apps\mobile\.expo\metro\externals\tls/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\inspect.tar.gz\apps\mobile\.expo\metro\externals\trace_events/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\inspect.tar.gz\apps\mobile\.expo\metro\externals\tty/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\inspect.tar.gz\apps\mobile\.expo\metro\externals\url/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\inspect.tar.gz\apps\mobile\.expo\metro\externals\util/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\inspect.tar.gz\apps\mobile\.expo\metro\externals\v8/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\inspect.tar.gz\apps\mobile\.expo\metro\externals\vm/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\inspect.tar.gz\apps\mobile\.expo\metro\externals\wasi/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\inspect.tar.gz\apps\mobile\.expo\metro\externals\worker_threads/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\inspect.tar.gz\apps\mobile\.expo\metro\externals\zlib/
+    index.js (0.00 MB) [.js]
+
+.\apps\mobile\inspect.tar.gz\apps\mobile\.expo\metro\shims/
+
+.\apps\mobile\inspect.tar.gz\apps\mobile\.expo\metro\shims\react-native-web/
+
+.\apps\mobile\inspect.tar.gz\apps\mobile\app/
+    index.tsx (0.00 MB) [.tsx]
+    layout.tsx (0.00 MB) [.tsx]
+
+.\apps\mobile\inspect.tar.gz\apps\mobile\app\(auth)/
+
+.\apps\mobile\inspect.tar.gz\apps\mobile\app\(client)/
+
+.\apps\mobile\inspect.tar.gz\apps\mobile\app\(partner)/
+
+.\apps\mobile\inspect.tar.gz\apps\mobile\assets/
+
+.\apps\mobile\inspect.tar.gz\apps\mobile\assets\users/
+
+.\apps\mobile\inspect.tar.gz\apps\mobile\components/
+    Header.tsx (0.00 MB) [.tsx]
+    MobileHeader.tsx (0.00 MB) [.tsx]
+
+.\apps\mobile\inspect.tar.gz\apps\mobile\constants/
+    roles.ts (0.00 MB) [.ts]
+
+.\apps\mobile\inspect.tar.gz\apps\mobile\context/
+    AuthProvider.tsx (0.00 MB) [.tsx]
+
+.\apps\mobile\inspect.tar.gz\apps\mobile\hooks/
+    useProtectedRoute.ts (0.00 MB) [.ts]
+
+.\apps\mobile\inspect.tar.gz\apps\mobile\inspect.tar.gz/
+
+.\apps\mobile\inspect.tar.gz\apps\mobile\laburando-mobile-final/
+    App.tsx (0.00 MB) [.tsx]
+    AuthProvider.tsx (0.00 MB) [.tsx]
+    app.config.js (0.00 MB) [.js]
+    navigationRef.ts (0.00 MB) [.ts]
+    package.json (0.00 MB) [.json]
+    roleRedirect.ts (0.00 MB) [.ts]
+    tsconfig.json (0.00 MB) [.json]
+
+.\apps\mobile\inspect.tar.gz\apps\mobile\laburando-mobile-final\screens/
+    DashboardScreen.tsx (0.00 MB) [.tsx]
+    HomeScreen.tsx (0.00 MB) [.tsx]
+    RegistroPaso3Screen.tsx (0.00 MB) [.tsx]
+
+.\apps\mobile\inspect.tar.gz\apps\mobile\lib/
+    AuthProvider.tsx (0.00 MB) [.tsx]
+    navigationRef.ts (0.00 MB) [.ts]
+    roleRedirect.ts (0.00 MB) [.ts]
+    supabase.ts (0.00 MB) [.ts]
+
+.\apps\mobile\inspect.tar.gz\apps\mobile\navigation/
+    AppNavigator.tsx (0.00 MB) [.tsx]
+    linking.ts (0.00 MB) [.ts]
+
+.\apps\mobile\inspect.tar.gz\apps\mobile\screens/
+    AuthCallbackScreen.tsx (0.00 MB) [.tsx]
+    CreateRequestScreen.tsx (0.00 MB) [.tsx]
+    DashboardScreen.tsx (0.00 MB) [.tsx]
+    HomeScreen.tsx (0.00 MB) [.tsx]
+    InvitadoHomeScreen.tsx (0.01 MB) [.tsx]
+    LoginScreen.tsx (0.00 MB) [.tsx]
+    MyRequestsScreen.tsx (0.00 MB) [.tsx]
+    ProfesionalesScreen.tsx (0.00 MB) [.tsx]
+    ProfessionalDashboardScreen.tsx (0.00 MB) [.tsx]
+    RegistroConfirmacionScreen.tsx (0.00 MB) [.tsx]
+    RegistroPaso1Screen.tsx (0.00 MB) [.tsx]
+    RegistroPaso2Screen.tsx (0.00 MB) [.tsx]
+    RegistroPaso3Screen.tsx (0.00 MB) [.tsx]
+    RequestsService.ts (0.00 MB) [.ts]
+    TestDeepLinkScreen.tsx (0.00 MB) [.tsx]
+    TestSupabaseScreen.tsx (0.00 MB) [.tsx]
+
+.\apps\mobile\inspect.tar.gz\apps\mobile\services/
+    RequestsService.ts (0.00 MB) [.ts]
+
+.\apps\mobile\inspect.tar.gz\apps\mobile\types/
+    navigation.ts (0.00 MB) [.ts]
+
+.\apps\mobile\inspect.tar.gz\apps\mobile\utils/
+    navigation.ts (0.00 MB) [.ts]
+
+.\apps\mobile\inspect.tar.gz\apps\web/
+    README.md (0.00 MB) [.md]
+    app.json (0.00 MB) [.json]
+    eas.json (0.00 MB) [.json]
+    eslint.config.js (0.00 MB) [.js]
+    next-env.d.ts (0.00 MB) [.ts]
+    next.config.js (0.00 MB) [.js]
+    package.json (0.00 MB) [.json]
+    tsconfig.json (0.00 MB) [.json]
+
+.\apps\mobile\inspect.tar.gz\apps\web\.expo/
+    README.md (0.00 MB) [.md]
+    devices.json (0.00 MB) [.json]
+
+.\apps\mobile\inspect.tar.gz\apps\web\app/
+    globals.css (0.00 MB) [.css]
+    layout.tsx (0.00 MB) [.tsx]
+    page.module.css (0.00 MB) [.css]
+    page.tsx (0.01 MB) [.tsx]
+
+.\apps\mobile\inspect.tar.gz\apps\web\app\admin/
+    admin.module.css (0.00 MB) [.css]
+    page.tsx (0.00 MB) [.tsx]
+
+.\apps\mobile\inspect.tar.gz\apps\web\app\admin\auth/
+
+.\apps\mobile\inspect.tar.gz\apps\web\app\admin\auth\callback/
+    page.tsx (0.00 MB) [.tsx]
+
+.\apps\mobile\inspect.tar.gz\apps\web\app\fonts/
+
+.\apps\mobile\inspect.tar.gz\apps\web\app\login/
+    login.module.css (0.00 MB) [.css]
+    page.tsx (0.00 MB) [.tsx]
+
+.\apps\mobile\inspect.tar.gz\apps\web\app\politica-devoluciones/
+    page.tsx (0.00 MB) [.tsx]
+
+.\apps\mobile\inspect.tar.gz\apps\web\app\styles/
+    Dashboard.module.css (0.00 MB) [.css]
+    terms.module.css (0.00 MB) [.css]
+
+.\apps\mobile\inspect.tar.gz\apps\web\app\terminos/
+    page.tsx (0.00 MB) [.tsx]
+
+.\apps\mobile\inspect.tar.gz\apps\web\assets/
+
+.\apps\mobile\inspect.tar.gz\apps\web\components/
+    Footer.module.css (0.00 MB) [.css]
+    Footer.tsx (0.00 MB) [.tsx]
+    Header.module.css (0.00 MB) [.css]
+    Header.tsx (0.00 MB) [.tsx]
+
+.\apps\mobile\inspect.tar.gz\apps\web\pages/
+    dashboard.tsx (0.00 MB) [.tsx]
+    professional-dashboard.module.css (0.00 MB) [.css]
+    professional-dashboard.tsx (0.00 MB) [.tsx]
+    test.tsx (0.00 MB) [.tsx]
+
+.\apps\mobile\inspect.tar.gz\apps\web\pages\professional-dashboard/
+    page.tsx (0.00 MB) [.tsx]
+
+.\apps\mobile\inspect.tar.gz\apps\web\public/
+
+.\apps\mobile\inspect.tar.gz\apps\web\public\users/
+
+.\apps\mobile\inspect.tar.gz\apps\web\screens/
+    GuestHomeScreen.tsx (0.01 MB) [.tsx]
+
+.\apps\mobile\inspect.tar.gz\apps\web\UsersPCAppDataRoamingnpm/
+
+.\apps\mobile\inspect.tar.gz\packages/
+
+.\apps\mobile\inspect.tar.gz\packages\eslint-config/
+    README.md (0.00 MB) [.md]
+    base.js (0.00 MB) [.js]
+    next.js (0.00 MB) [.js]
+    package.json (0.00 MB) [.json]
+    react-internal.js (0.00 MB) [.js]
+
+.\apps\mobile\inspect.tar.gz\packages\typescript-config/
+    base.json (0.00 MB) [.json]
+    nextjs.json (0.00 MB) [.json]
+    package.json (0.00 MB) [.json]
+    react-library.json (0.00 MB) [.json]
+
+.\apps\mobile\inspect.tar.gz\packages\ui/
+    package.json (0.00 MB) [.json]
+    tsconfig.json (0.00 MB) [.json]
+
+.\apps\mobile\inspect.tar.gz\packages\ui\src/
+    button.tsx (0.00 MB) [.tsx]
+    card.tsx (0.00 MB) [.tsx]
+    code.tsx (0.00 MB) [.tsx]
+
+.\apps\mobile\inspect.tar.gz\packages\ui\turbo/
+
+.\apps\mobile\inspect.tar.gz\packages\ui\turbo\generators/
+    config.ts (0.00 MB) [.ts]
+
+.\apps\mobile\inspect.tar.gz\packages\ui\turbo\generators\templates/
+
+.\apps\mobile\inspect.tar.gz\packages\utils/
+    getRedirectUrl.ts (0.00 MB) [.ts]
+    package.json (0.00 MB) [.json]
+    supabase-mobile.ts (0.00 MB) [.ts]
+    supabase-web.ts (0.00 MB) [.ts]
+    supabase.ts (0.00 MB) [.ts]
+    supabaseClient.ts (0.00 MB) [.ts]
+
+.\apps\mobile\inspect.tar.gz\UsersPCAppDataRoamingnpm/
+
+.\apps\mobile\laburando-mobile-final/
+    App.tsx (0.00 MB) [.tsx]
+    AuthProvider.tsx (0.00 MB) [.tsx]
+    app.config.js (0.00 MB) [.js]
+    navigationRef.ts (0.00 MB) [.ts]
+    package.json (0.00 MB) [.json]
+    roleRedirect.ts (0.00 MB) [.ts]
+    tsconfig.json (0.00 MB) [.json]
+
+.\apps\mobile\laburando-mobile-final\screens/
+    DashboardScreen.tsx (0.00 MB) [.tsx]
+    HomeScreen.tsx (0.00 MB) [.tsx]
+    RegistroPaso3Screen.tsx (0.00 MB) [.tsx]
+
+.\apps\mobile\lib/
+    AuthProvider.tsx (0.00 MB) [.tsx]
+    navigationRef.ts (0.00 MB) [.ts]
+    roleRedirect.ts (0.00 MB) [.ts]
+    supabase.ts (0.00 MB) [.ts]
+
+.\apps\mobile\navigation/
+    AppNavigator.tsx (0.00 MB) [.tsx]
+    linking.ts (0.00 MB) [.ts]
+
+.\apps\mobile\screens/
+    AuthCallbackScreen.tsx (0.00 MB) [.tsx]
+    CreateRequestScreen.tsx (0.00 MB) [.tsx]
+    DashboardScreen.tsx (0.00 MB) [.tsx]
+    HomeScreen.tsx (0.00 MB) [.tsx]
+    InvitadoHomeScreen.tsx (0.01 MB) [.tsx]
+    LoginScreen.tsx (0.00 MB) [.tsx]
+    MyRequestsScreen.tsx (0.00 MB) [.tsx]
+    ProfesionalesScreen.tsx (0.00 MB) [.tsx]
+    ProfessionalDashboardScreen.tsx (0.00 MB) [.tsx]
+    RegistroConfirmacionScreen.tsx (0.00 MB) [.tsx]
+    RegistroPaso1Screen.tsx (0.00 MB) [.tsx]
+    RegistroPaso2Screen.tsx (0.00 MB) [.tsx]
+    RegistroPaso3Screen.tsx (0.00 MB) [.tsx]
+    RequestsService.ts (0.00 MB) [.ts]
+    TestDeepLinkScreen.tsx (0.00 MB) [.tsx]
+    TestSupabaseScreen.tsx (0.00 MB) [.tsx]
+
+.\apps\mobile\services/
+    RequestsService.ts (0.00 MB) [.ts]
+
+.\apps\mobile\types/
+    navigation.ts (0.00 MB) [.ts]
+
+.\apps\mobile\utils/
+    navigation.ts (0.00 MB) [.ts]
+
+.\apps\web/
+    .eslintrc.json (0.00 MB) [.json]
+    README.md (0.00 MB) [.md]
+    app.json (0.00 MB) [.json]
+    eas.json (0.00 MB) [.json]
+    env-check.js (0.00 MB) [.js]
+    eslint.config.js (0.00 MB) [.js]
+    middleware.ts (0.00 MB) [.ts]
+    next-env.d.ts (0.00 MB) [.ts]
+    next.config.js (0.00 MB) [.js]
+    package.json (0.00 MB) [.json]
+    tsconfig.json (0.00 MB) [.json]
+
+.\apps\web\.expo/
+    README.md (0.00 MB) [.md]
+    devices.json (0.00 MB) [.json]
+
+.\apps\web\config/
+
+.\apps\web\hooks/
+    useAdminStats.ts (0.00 MB) [.ts]
+    useAuth.ts (0.00 MB) [.ts]
+    useFetch.ts (0.00 MB) [.ts]
+    useFetchRequests.ts (0.00 MB) [.ts]
+    useMiHistorial.ts (0.00 MB) [.ts]
+    useNotificacion.ts (0.00 MB) [.ts]
+    usePerfil.ts (0.00 MB) [.ts]
+    useUserRole.ts (0.00 MB) [.ts]
+
+.\apps\web\public/
+    OneSignalSDK.sw.js (0.00 MB) [.js]
+    OneSignalSDKUpdaterWorker.js (0.00 MB) [.js]
+    OneSignalSDKWorker.js (0.00 MB) [.js]
+
+.\apps\web\public\admin/
+
+.\apps\web\public\icons/
+
+.\apps\web\public\LogoStore/
+
+.\apps\web\public\users/
+
+.\apps\web\src/
+
+.\apps\web\src\app/
+    auth-test.tsx (0.00 MB) [.tsx]
+    globals.css (0.00 MB) [.css]
+    layout.tsx (0.00 MB) [.tsx]
+    manifest.ts (0.00 MB) [.ts]
+    page.module.css (0.01 MB) [.css]
+    page.tsx (0.00 MB) [.tsx]
+    providers.tsx (0.00 MB) [.tsx]
+
+.\apps\web\src\app\(dashboard)/
+
+.\apps\web\src\app\(dashboard)\dashboard/
+    page.tsx (0.00 MB) [.tsx]
+
+.\apps\web\src\app\admin/
+    layout.tsx (0.00 MB) [.tsx]
+    page.tsx (0.00 MB) [.tsx]
+
+.\apps\web\src\app\admin\actions/
+    verificarProfesional.ts (0.00 MB) [.ts]
+
+.\apps\web\src\app\admin\comprar/
+    page.tsx (0.00 MB) [.tsx]
+
+.\apps\web\src\app\admin\compras/
+    page.tsx (0.00 MB) [.tsx]
+
+.\apps\web\src\app\admin\credits/
+    page.tsx (0.00 MB) [.tsx]
+
+.\apps\web\src\app\admin\credits\add/
+    page.tsx (0.00 MB) [.tsx]
+
+.\apps\web\src\app\admin\cupones/
+    page.tsx (0.00 MB) [.tsx]
+
+.\apps\web\src\app\admin\dashboard/
+    DashboardAdmin.module.css (0.00 MB) [.css]
+    page.tsx (0.00 MB) [.tsx]
+
+.\apps\web\src\app\admin\desbloqueos/
+    page.tsx (0.00 MB) [.tsx]
+
+.\apps\web\src\app\admin\historial/
+    HistorialVerificacion.module.css (0.00 MB) [.css]
+    page.tsx (0.00 MB) [.tsx]
+
+.\apps\web\src\app\admin\mensajes/
+    MensajesAdmin.module.css (0.00 MB) [.css]
+    page.tsx (0.00 MB) [.tsx]
+
+.\apps\web\src\app\admin\notificaciones/
+    page.tsx (0.00 MB) [.tsx]
+
+.\apps\web\src\app\admin\pendientes/
+    page.tsx (0.00 MB) [.tsx]
+
+.\apps\web\src\app\admin\profesionales/
+    ProfesionalesAdmin.module.css (0.00 MB) [.css]
+    page.tsx (0.00 MB) [.tsx]
+
+.\apps\web\src\app\admin\profesionales\[id]/
+    page.tsx (0.00 MB) [.tsx]
+    perfilAdmin.module.css (0.00 MB) [.css]
+
+.\apps\web\src\app\admin\profile/
+    page.tsx (0.00 MB) [.tsx]
+    profile.module.css (0.00 MB) [.css]
+
+.\apps\web\src\app\admin\profile\[id]/
+    page.tsx (0.00 MB) [.tsx]
+
+.\apps\web\src\app\admin\settings/
+    SettingsAdmin.module.css (0.00 MB) [.css]
+    page.tsx (0.00 MB) [.tsx]
+
+.\apps\web\src\app\admin\shop/
+    page.tsx (0.00 MB) [.tsx]
+    shop.module.css (0.00 MB) [.css]
+
+.\apps\web\src\app\admin\solicitudes/
+    SolicitudesAdmin.module.css (0.00 MB) [.css]
+    page.tsx (0.00 MB) [.tsx]
+
+.\apps\web\src\app\admin\verificar-profesionales/
+    page.tsx (0.00 MB) [.tsx]
+
+.\apps\web\src\app\api/
+    route.ts (0.00 MB) [.ts]
+
+.\apps\web\src\app\api\admin/
+
+.\apps\web\src\app\api\admin\verificar-documentos/
+    route.ts (0.00 MB) [.ts]
+
+.\apps\web\src\app\api\crear-solicitud/
+    route.ts (0.00 MB) [.ts]
+
+.\apps\web\src\app\api\credits/
+
+.\apps\web\src\app\api\credits\add/
+    route.ts (0.00 MB) [.ts]
+
+.\apps\web\src\app\api\debug/
+
+.\apps\web\src\app\api\debug\update-professional/
+    route.ts (0.00 MB) [.ts]
+
+.\apps\web\src\app\api\desbloquear-solicitud/
+    route.ts (0.00 MB) [.ts]
+
+.\apps\web\src\app\api\enviar-masivo/
+    route.ts (0.00 MB) [.ts]
+
+.\apps\web\src\app\api\mercadopagoWebhook/
+    route.ts (0.00 MB) [.ts]
+
+.\apps\web\src\app\api\notify/
+    route.ts (0.00 MB) [.ts]
+
+.\apps\web\src\app\api\notify-professional/
+    route.ts (0.00 MB) [.ts]
+
+.\apps\web\src\app\api\payments/
+    createPreference.ts (0.00 MB) [.ts]
+
+.\apps\web\src\app\api\payments\createPreference/
+    route.ts (0.00 MB) [.ts]
+
+.\apps\web\src\app\api\prompts/
+    route.ts (0.00 MB) [.ts]
+
+.\apps\web\src\app\api\reenviar-notificacion/
+    route.ts (0.00 MB) [.ts]
+
+.\apps\web\src\app\api\requests/
+    notify.ts (0.00 MB) [.ts]
+    unlock.ts (0.00 MB) [.ts]
+
+.\apps\web\src\app\api\requests\new/
+    route.ts (0.00 MB) [.ts]
+
+.\apps\web\src\app\api\send/
+
+.\apps\web\src\app\api\send\route.ts/
+
+.\apps\web\src\app\api\send-request-mail/
+    route.ts (0.00 MB) [.ts]
+
+.\apps\web\src\app\api\solicitudes/
+
+.\apps\web\src\app\api\solicitudes\create/
+    route.ts (0.00 MB) [.ts]
+
+.\apps\web\src\app\api\solicitudes\unlock/
+    route.ts (0.00 MB) [.ts]
+
+.\apps\web\src\app\api\solicitudes-desbloqueadas/
+    route.ts (0.00 MB) [.ts]
+
+.\apps\web\src\app\api\verificar-profesional/
+    route.ts (0.00 MB) [.ts]
+
+.\apps\web\src\app\auth/
+
+.\apps\web\src\app\auth\callback/
+    callback.module.css (0.00 MB) [.css]
+    page.tsx (0.00 MB) [.tsx]
+
+.\apps\web\src\app\auth\forgot-password/
+    forgotPassword.module.css (0.00 MB) [.css]
+    page.tsx (0.00 MB) [.tsx]
+
+.\apps\web\src\app\auth\reset-password/
+    page.tsx (0.00 MB) [.tsx]
+
+.\apps\web\src\app\debug/
+
+.\apps\web\src\app\debug\credits/
+    page.tsx (0.00 MB) [.tsx]
+
+.\apps\web\src\app\explore/
+    explore.module.css (0.00 MB) [.css]
+    page.tsx (0.00 MB) [.tsx]
+
+.\apps\web\src\app\fonts/
+
+.\apps\web\src\app\login/
+    login.module.css (0.00 MB) [.css]
+    page.tsx (0.00 MB) [.tsx]
+
+.\apps\web\src\app\politica-devoluciones/
+    page.tsx (0.00 MB) [.tsx]
+
+.\apps\web\src\app\profesionales/
+    list.ts (0.00 MB) [.ts]
+    page.tsx (0.00 MB) [.tsx]
+
+.\apps\web\src\app\profesionales\[category]/
+    page.module.css (0.00 MB) [.css]
+    page.tsx (0.00 MB) [.tsx]
+
+.\apps\web\src\app\professional/
+    layout.tsx (0.00 MB) [.tsx]
+    page.tsx (0.00 MB) [.tsx]
+
+.\apps\web\src\app\professional\dashboard/
+    ProfessionalDash.module.css (0.00 MB) [.css]
+    page.tsx (0.01 MB) [.tsx]
+
+.\apps\web\src\app\professional\historial-verificacion/
+    page.tsx (0.00 MB) [.tsx]
+
+.\apps\web\src\app\professional\perfil/
+    Profile.module.css (0.00 MB) [.css]
+    page.tsx (0.01 MB) [.tsx]
+
+.\apps\web\src\app\professional\shop/
+    page.tsx (0.00 MB) [.tsx]
+    shop.module.css (0.00 MB) [.css]
+
+.\apps\web\src\app\professional\solicitudes/
+    page.tsx (0.00 MB) [.tsx]
+
+.\apps\web\src\app\professional\verificacion/
+    page.tsx (0.00 MB) [.tsx]
+    verificacion.module.css (0.00 MB) [.css]
+
+.\apps\web\src\app\register/
+
+.\apps\web\src\app\register\profesional/
+    page.tsx (0.00 MB) [.tsx]
+    register.module.css (0.00 MB) [.css]
+
+.\apps\web\src\app\request/
+    page.tsx (0.00 MB) [.tsx]
+
+.\apps\web\src\app\services-directory/
+    page.tsx (0.00 MB) [.tsx]
+    services-directory.module.css (0.00 MB) [.css]
+
+.\apps\web\src\app\solicitar/
+    page.tsx (0.00 MB) [.tsx]
+
+.\apps\web\src\app\styles/
+    Dashboard.module.css (0.00 MB) [.css]
+    terms.module.css (0.00 MB) [.css]
+
+.\apps\web\src\app\terminos/
+    page.tsx (0.00 MB) [.tsx]
+
+.\apps\web\src\app\verificacion-pendiente/
+    page.tsx (0.00 MB) [.tsx]
+
+.\apps\web\src\assets/
+
+.\apps\web\src\components/
+    BudgetRequestModal.module.css (0.00 MB) [.css]
+    BudgetRequestModal.tsx (0.01 MB) [.tsx]
+    CategoriesSection.module.css (0.00 MB) [.css]
+    CategoriesSection.tsx (0.00 MB) [.tsx]
+    DebugCredits.tsx (0.00 MB) [.tsx]
+    Footer.module.css (0.00 MB) [.css]
+    Footer.tsx (0.00 MB) [.tsx]
+    Header.module.css (0.00 MB) [.css]
+    Header.tsx (0.00 MB) [.tsx]
+    HeroSection.module.css (0.00 MB) [.css]
+    HeroSection.tsx (0.00 MB) [.tsx]
+    HowItWorks.module.css (0.00 MB) [.css]
+    HowItWorks.tsx (0.00 MB) [.tsx]
+    IconSlider.module.css (0.00 MB) [.css]
+    IconSlider.tsx (0.00 MB) [.tsx]
+    LayoutWrapper.tsx (0.00 MB) [.tsx]
+    LogoutButton.module.css (0.00 MB) [.css]
+    LogoutButton.tsx (0.00 MB) [.tsx]
+    MobileNav.module.css (0.00 MB) [.css]
+    MobileNav.tsx (0.00 MB) [.tsx]
+    Modal.module.css (0.00 MB) [.css]
+    Modal.tsx (0.00 MB) [.tsx]
+    NotificationMonitor.tsx (0.00 MB) [.tsx]
+    OneSignalInit.tsx (0.00 MB) [.tsx]
+    ProfessionalSidebar.module.css (0.00 MB) [.css]
+    ProfessionalSidebar.tsx (0.00 MB) [.tsx]
+    RecommendedSection.module.css (0.00 MB) [.css]
+    RecommendedSection.tsx (0.00 MB) [.tsx]
+    ServiceCarousel.module.css (0.00 MB) [.css]
+    ServiceCarousel.tsx (0.00 MB) [.tsx]
+    Sidebar.tsx (0.00 MB) [.tsx]
+    SolicitudItem.module.css (0.00 MB) [.css]
+    SolicitudItem.tsx (0.00 MB) [.tsx]
+    TestFetch.tsx (0.00 MB) [.tsx]
+    TestimonialsSection.module.css (0.00 MB) [.css]
+    TestimonialsSection.tsx (0.00 MB) [.tsx]
+    WhatsAppButton.tsx (0.00 MB) [.tsx]
+    notifications.tsx (0.00 MB) [.tsx]
+
+.\apps\web\src\components\admin/
+    AdminDashboardLayout.tsx (0.00 MB) [.tsx]
+    AdminSidebar.module.css (0.00 MB) [.css]
+    AdminSidebar.tsx (0.00 MB) [.tsx]
+    ComprasAdmin.module.css (0.00 MB) [.css]
+    ComprasAdmin.tsx (0.00 MB) [.tsx]
+    DashboardAdmin.module.css (0.00 MB) [.css]
+    DashboardAdmin.tsx (0.00 MB) [.tsx]
+    DesbloqueosAdmin.module.css (0.00 MB) [.css]
+    DesbloqueosAdmin.tsx (0.00 MB) [.tsx]
+    HistorialNotificaciones.tsx (0.00 MB) [.tsx]
+    MensajesAdmin.module.css (0.00 MB) [.css]
+    MensajesAdmin.tsx (0.00 MB) [.tsx]
+    SolicitudesDesbloqueadas.tsx (0.00 MB) [.tsx]
+    SolicitudesSinDesbloquear.tsx (0.00 MB) [.tsx]
+    VerificarProfesionales.module.css (0.00 MB) [.css]
+    VerificarProfesionales.tsx (0.00 MB) [.tsx]
+
+.\apps\web\src\components\client/
+    LogoutWrapper.tsx (0.00 MB) [.tsx]
+
+.\apps\web\src\components\common/
+    SafeLink.tsx (0.00 MB) [.tsx]
+
+.\apps\web\src\components\context/
+    CreditContext.tsx (0.00 MB) [.tsx]
+
+.\apps\web\src\components\professional/
+    ActualizarVerificacion.tsx (0.00 MB) [.tsx]
+    AvatarUploader.module.css (0.00 MB) [.css]
+    AvatarUploader.tsx (0.00 MB) [.tsx]
+    AvatarWithFallback.tsx (0.00 MB) [.tsx]
+    DashboardPro.module.css (0.00 MB) [.css]
+    DashboardPro.tsx (0.00 MB) [.tsx]
+    DashboardProLayout.tsx (0.00 MB) [.tsx]
+    DocumentUploader.tsx (0.01 MB) [.tsx]
+    Notifications.tsx (0.00 MB) [.tsx]
+    ProfessionalDashboard.tsx (0.00 MB) [.tsx]
+    Shop.module.css (0.00 MB) [.css]
+    Shop.tsx (0.00 MB) [.tsx]
+    VerificacionEstado.tsx (0.00 MB) [.tsx]
+    VerificacionHistorial.tsx (0.00 MB) [.tsx]
+    VerificacionProfesional.tsx (0.00 MB) [.tsx]
+    VerificacionProfesionalCarga.tsx (0.01 MB) [.tsx]
+    dashboardVerificacion.module.css (0.00 MB) [.css]
+    verificacion.module.css (0.00 MB) [.css]
+
+.\apps\web\src\lib/
+    onesignal.ts (0.00 MB) [.ts]
+    supabase-web.ts (0.00 MB) [.ts]
+
+.\apps\web\src\screens/
+
+.\apps\web\src\styles/
+    DashboardPro.module.css (0.00 MB) [.css]
+    SolicitudItem.module.css (0.00 MB) [.css]
+    admin.module.css (0.00 MB) [.css]
+
+.\packages/
+
+.\packages\eslint-config/
+    README.md (0.00 MB) [.md]
+    base.js (0.00 MB) [.js]
+    next.js (0.00 MB) [.js]
+    package.json (0.00 MB) [.json]
+    react-internal.js (0.00 MB) [.js]
+
+.\packages\typescript-config/
+    base.json (0.00 MB) [.json]
+    nextjs.json (0.00 MB) [.json]
+    package.json (0.00 MB) [.json]
+    react-library.json (0.00 MB) [.json]
+
+.\packages\ui/
+    package.json (0.00 MB) [.json]
+    tsconfig.json (0.00 MB) [.json]
+
+.\packages\ui\src/
+    button.tsx (0.00 MB) [.tsx]
+    card.tsx (0.00 MB) [.tsx]
+    code.tsx (0.00 MB) [.tsx]
+
+.\packages\ui\turbo/
+
+.\packages\ui\turbo\generators/
+    config.ts (0.00 MB) [.ts]
+
+.\packages\ui\turbo\generators\templates/
+
+.\packages\utils/
+    GestionPresupuestos.ts (0.00 MB) [.ts]
+    GestionVerificacionHist.ts (0.00 MB) [.ts]
+    createProfessionalProfile.ts (0.00 MB) [.ts]
+    getRedirectUrl.ts (0.00 MB) [.ts]
+    notify.ts (0.00 MB) [.ts]
+    package.json (0.00 MB) [.json]
+    sendEmail.ts (0.00 MB) [.ts]
+    sendNotification.ts (0.00 MB) [.ts]
+    supabase-server.ts (0.00 MB) [.ts]
+    supabaseClient.ts (0.00 MB) [.ts]
+
+.\packages\utils\types/
+    supabase.ts (0.00 MB) [.ts]
+

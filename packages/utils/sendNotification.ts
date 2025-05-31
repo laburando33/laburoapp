@@ -102,3 +102,5 @@ export async function sendNotification({
     console.error("❌ Error al guardar la notificación en Supabase:", error.message);
   }
 }
+// Este código maneja el envío de notificaciones híbridas utilizando OneSignal y Expo Push.
+// Primero envía la notificación a OneSignal para usuarios web.

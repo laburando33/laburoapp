@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { supabase } from "@/lib/supabase-web";
+import { supabase } from "@lib/supabase-web";
 
 export const useFetchRequests = (filters: Record<string, any> = {}) => {
   const [requests, setRequests] = useState([]);

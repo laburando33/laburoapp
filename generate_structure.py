@@ -1,22 +1,29 @@
 import os
 
 EXCLUDE_EXTENSIONS = ['.png', '.jpg', '.jpeg', '.mp4', '.mov', '.csv', '.xlsx']
-MAX_SIZE_MB = 5  # Tamaño máximo de archivos en MB para incluir en el listado
+INCLUDE_EXTENSIONS = ['.ts', '.tsx', '.js', '.jsx', '.json', '.css', '.scss', '.html', '.md', '.txt']
+MAX_SIZE_MB = 5  # Máximo tamaño permitido
 
 def get_size_mb(file_path):
-    size = os.path.getsize(file_path) / (1024 * 1024)
-    return size
+    return os.path.getsize(file_path) / (1024 * 1024)
 
 def generate_structure(root_dir='.', output_file='project_structure.txt'):
-    with open(output_file, 'w') as f:
+    with open(output_file, 'w', encoding='utf-8') as f:
         for foldername, subfolders, filenames in os.walk(root_dir):
             f.write(f"{foldername}/\n")
-            for filename in filenames:
+            for filename in sorted(filenames):
                 file_path = os.path.join(foldername, filename)
-                if not any(filename.endswith(ext) for ext in EXCLUDE_EXTENSIONS) and get_size_mb(file_path) <= MAX_SIZE_MB:
-                    f.write(f"    {filename} ({get_size_mb(file_path):.2f} MB)\n")
+                ext = os.path.splitext(filename)[1].lower()
+                try:
+                    size_mb = get_size_mb(file_path)
+                except OSError:
+                    continue  # Ignorar archivos inaccesibles
+
+                if ext in INCLUDE_EXTENSIONS and ext not in EXCLUDE_EXTENSIONS and size_mb <= MAX_SIZE_MB:
+                    f.write(f"    {filename} ({size_mb:.2f} MB) [{ext}]\n")
             f.write("\n")
-    print(f"Estructura generada en {output_file}")
+    print(f"✅ Estructura generada en: {output_file}")
 
 # Ejecutar
-generate_structure()
+if __name__ == "__main__":
+    generate_structure()

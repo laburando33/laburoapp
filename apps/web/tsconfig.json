@@ -1,24 +1,18 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
+    "baseUrl": ".",             // 👈 siempre desde raíz del proyecto web
     "jsx": "preserve",
-    "baseUrl": ".",
     "paths": {
-      "@/*": ["./*"],
-      "@/components/*": ["./components/*"],
-      "@/utils/*": ["../../packages/utils/*"],
-      "@repo/ui/*": ["../../packages/ui/*"],
-      "@repo/utils/*": ["../../packages/utils/*"],
-      "@repo/ui": ["../../packages/ui/*"],
-      "@lib/*": ["lib/*"],
-      "@/package/*": ["../../packages/*"],
-      "@utils/*": ["../../packages/utils/*"]
+      "@hooks/*": ["hooks/*"],                        // ✅ hooks está al lado de src/
+      "@lib/*": ["src/lib/*"],                        // ✅ supabase-web.ts
+      "@utils/*": ["../../packages/utils/*"],         // ✅ backcase
+      "@shared/*": ["../../packages/utils/*"],        // alias opcional
+      "@components/*": ["src/components/*"],
+      "@styles/*": ["src/styles/*"],
+      "@admin/*": ["src/app/admin/*"]
     },
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
+    "plugins": [{ "name": "next" }],
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "noEmit": true,
@@ -27,11 +21,18 @@
     "isolatedModules": true
   },
   "include": [
-    "**/*.ts",
-    "**/*.tsx",
+    "src/**/*.ts",
+    "src/**/*.tsx",
     "next-env.d.ts",
-    "next.config.js",
     ".next/types/**/*.ts"
   ],
   "exclude": ["node_modules"]
 }
+// Nota: Este tsconfig.json es específico para el proyecto web y no debe ser usado en otros proyectos
+// Nota: Asegúrate de que los paths sean correctos según la estructura de tu proyecto
+// Nota: Este archivo es para un proyecto Next.js, por lo que incluye configuraciones específicas para Next.js
+// Nota: Si usas TypeScript en otros proyectos, necesitarás crear tsconfig.json específicos para cada uno
+// Nota: Este archivo no debe ser usado en otros proyectos, ya que es específico para el proyecto web
+// Nota: Asegúrate de que los paths sean correctos según la estructura de tu proyecto
+// Nota: Este archivo es para un proyecto Next.js, por lo que incluye configuraciones específicas para Next.js
+// Nota: Si usas TypeScript en otros proyectos, necesitarás crear tsconfig.json específicos para cada uno

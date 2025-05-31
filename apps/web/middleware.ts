@@ -13,7 +13,8 @@ export async function middleware(req: NextRequest) {
   const url = req.nextUrl;
   const isLoggedIn = !!session?.user;
   const isLoginPage = url.pathname === "/login";
-  const isAdminRoot = url.pathname === "/admin";
+  const isAdminRoute = url.pathname.startsWith("/admin");
+  const isProRoute = url.pathname.startsWith("/professional");
 
   if (!isLoggedIn) {
     if (isLoginPage) return res;
@@ -44,23 +45,33 @@ export async function middleware(req: NextRequest) {
       return NextResponse.redirect(new URL("/login?msg=noprofile", req.url));
     }
 
-    console.log("✅ Perfil creado exitosamente");
-    return NextResponse.redirect(new URL("/admin/profile", req.url));
+    // 🔁 Redireccionar según rol predeterminado
+    return NextResponse.redirect(new URL("/professional/perfil", req.url));
   }
 
   if (isLoginPage) {
-    return NextResponse.redirect(new URL("/admin", req.url));
+    return profile.role === "administrador"
+      ? NextResponse.redirect(new URL("/admin", req.url))
+      : NextResponse.redirect(new URL("/professional", req.url));
   }
 
-  if (isAdminRoot) {
-    return profile.role === "administrador"
-      ? res
-      : NextResponse.redirect(new URL("/admin/profile", req.url));
+  if (isAdminRoute && profile.role !== "administrador") {
+    return NextResponse.redirect(new URL("/professional/perfil", req.url));
+  }
+
+  if (isProRoute && profile.role !== "profesional") {
+    return NextResponse.redirect(new URL("/admin", req.url));
   }
 
   return res;
 }
 
 export const config = {
-  matcher: ["/admin/:path*", "/admin", "/login"],
+  matcher: [
+    "/admin/:path*",
+    "/admin",
+    "/professional/:path*",
+    "/professional",
+    "/login",
+  ],
 };
