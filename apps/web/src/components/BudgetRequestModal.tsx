@@ -1,7 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { supabase } from "@lib/supabase-web"; // Importa la instancia de Supabase del lado del cliente web
+// Importa la instancia de Supabase del lado del cliente web solo si la usas para otras cosas
+// Si solo la usabas para el insert, puedes eliminarla por completo.
+// Si aún necesitas cargar datos (como la lista de servicios/ubicaciones dinámicamente), manténla.
+// import { supabase } from "@lib/supabase-web"; // REMOVE THIS LINE IF YOU ARE NOT UPLOADING FILES DIRECTLY FROM THE CLIENT
+
 import styles from "./BudgetRequestModal.module.css"; // Archivo CSS para estilos
 
 // Datos estáticos para servicios y ubicaciones
@@ -28,18 +32,24 @@ const allLocations: { [key: string]: string[] } = {
 // Definición de los pasos del formulario, preguntas y campos asociados
 const steps = [
   { questions: ["¿Qué servicio necesitás?", "¿Con qué urgencia? (opcional)"], fields: ["servicio", "urgencia"] },
-  { questions: ["¿Dónde se realizará?", "Barrio o zona"], fields: ["ubicacion", "barrio"] },
+  { questions: ["¿Dónde se realizará? (Ciudad/Zona)", "Dirección completa"], fields: ["ubicacion", "direccion"] },
   { questions: ["¿Querés subir una foto? (opcional)", "Comentarios adicionales (opcional)"], fields: ["foto", "comentarios"] },
   { questions: ["Nombre y apellido", "Email", "Teléfono"], fields: ["nombre", "email", "telefono"] }
 ];
 
 interface BudgetRequestModalProps {
   onClose: () => void; // Función para cerrar el modal
+  initialData?: any; // Agregado para soportar initialData si es necesario, aunque no se usa en este ejemplo
 }
 
-export default function BudgetRequestModal({ onClose }: BudgetRequestModalProps) {
+export default function BudgetRequestModal({ onClose, initialData }: BudgetRequestModalProps) {
   const [step, setStep] = useState(0); // Estado para controlar el paso actual del formulario
-  const [formData, setFormData] = useState<any>({}); // Estado para almacenar los datos del formulario
+  const [formData, setFormData] = useState<any>({
+    servicio: initialData?.servicio || "",
+    ubicacion: initialData?.ubicacion || "",
+    direccion: "", // Initialize direccion as it's a new field
+    // ... initialize other fields as needed
+  }); // Estado para almacenar los datos del formulario
   const [file, setFile] = useState<File | null>(null); // Estado para el archivo de la foto
   const [success, setSuccess] = useState(false); // Estado para indicar si la solicitud fue exitosa
   const [loading, setLoading] = useState(false); // Estado para indicar si se está enviando la solicitud
@@ -101,52 +111,52 @@ export default function BudgetRequestModal({ onClose }: BudgetRequestModalProps)
 
     setLoading(true); // Activa el estado de carga
     setMessage(null); // Limpia mensajes
-    let foto_url: string | null = null;
+    // let foto_url: string | null = null; // This will now be handled by the API route if you send the file there
 
     try {
-      // 1. Subir la foto a Supabase Storage si existe un archivo
-      if (file) {
-        const path = `presupuestos/${Date.now()}-${file.name}`; // Ruta única para el archivo
-        const { error: uploadError } = await supabase.storage
-          .from("presupuestos") // Nombre del bucket de almacenamiento
-          .upload(path, file, { upsert: true }); // Sube el archivo, sobrescribe si ya existe
-        if (uploadError) throw uploadError;
+      // If you need to upload files, you should send them to your API route
+      // which will then handle the Supabase Storage upload on the server side.
+      // For simplicity, this example will send the file as part of the FormData.
+      // However, for large files or more robust handling, consider a dedicated
+      // upload API route or using a client-side upload *if* your Supabase policies allow it.
 
-        // Obtener la URL pública de la foto subida
-        const { data } = supabase.storage.from("presupuestos").getPublicUrl(path);
-        foto_url = data.publicUrl;
+      // Prepara el payload para tu API Route /api/requests
+      // Asegúrate de que los nombres de los campos coincidan con lo que espera tu route.ts
+      const payload = {
+        user_email: formData.email,
+        job_description: formData.comentarios || "", // Combina comentarios y cualquier otra información
+        category: formData.servicio,
+        location: `${formData.ubicacion}, ${formData.direccion}`, // Combina ubicación y dirección
+        // Añade cualquier otro campo que necesites pasar a tu API Route y que route.ts pueda procesar
+        // Por ejemplo, si quieres guardar la urgencia, tendrás que añadir una columna 'urgencia' a 'requests'
+        // y manejarla en tu API Route.
+        urgency: formData.urgencia || null, // Optional, ensure your route.ts handles this
+        // photo_file_base64: file ? await convertFileToBase64(file) : null, // If you want to send the file as base64
+        // Or, you can use FormData and send the file directly if your API route is set up for it.
+        // For simple JSON requests, sending base64 is an option for smaller files.
+        // The original `route.ts` does not handle file uploads.
+        // If you need to upload photos, you'll need to modify `src/app/api/requests/route.ts` to handle file uploads
+        // (e.g., using Multer or similar for Node.js, or streaming the file directly to Supabase storage from the server).
+        // For now, photo_url will be null as we are not uploading it from the client directly to Supabase Storage.
+      };
+
+
+      const response = await fetch("/api/requests/new", { // <-- APUNTA A TU API ROUTE
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Error desconocido al enviar la solicitud.");
       }
 
-      // 2. Insertar los datos del presupuesto en la tabla 'presupuestos'
-      const { data, error } = await supabase
-        .from("presupuestos")
-        .insert([{
-          servicio: formData.servicio,
-          urgencia: formData.urgencia || null, // Si no hay urgencia, se guarda como null
-          ubicacion: formData.ubicacion,
-          tipo_propiedad: formData.barrio, // 'barrio' se mapea a 'tipo_propiedad'
-          foto_url,
-          comentarios: formData.comentarios || null, // Si no hay comentarios, se guarda como null
-          nombre: formData.nombre,
-          contacto: `${formData.email} | ${formData.telefono}` // Combina email y teléfono
-        }])
-        .select() // Selecciona los datos insertados
-        .single(); // Espera un único registro insertado
-      if (error) throw error;
+      const result = await response.json();
+      console.log("Solicitud enviada con éxito desde el modal:", result.solicitud);
 
-      // 3. Notificar a profesionales a través de una API Route de Next.js
-      // Esta API Route (apps/web/src/api/reenviar-notificacion.ts)
-      // debería usar la función compartida `sendNotification` de `packages/utils`
-      // y la instancia `supabaseServer` para realizar las notificaciones.
-      await fetch("/api/reenviar-notificacion", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          solicitudId: data.id,
-          servicio: data.servicio,
-          ubicacion: data.ubicacion,
-        }),
-      });
 
       setSuccess(true); // Muestra el mensaje de éxito
       // Cierra el modal después de un tiempo
@@ -166,8 +176,6 @@ export default function BudgetRequestModal({ onClose }: BudgetRequestModalProps)
   const { questions, fields } = steps[step];
   // Calcula el progreso de la barra
   const progress = ((step + 1) / steps.length) * 100;
-  // Obtiene los barrios disponibles para la ubicación seleccionada
-  const barrios = formData.ubicacion ? allLocations[formData.ubicacion] || [] : [];
 
   return (
     <div className={styles.overlay}>
@@ -231,18 +239,6 @@ export default function BudgetRequestModal({ onClose }: BudgetRequestModalProps)
                       <option value="">Seleccioná una zona</option>
                       {Object.keys(allLocations).map((loc, index) => (
                         <option key={index} value={loc}>{loc}</option>
-                      ))}
-                    </select>
-                  ) : fields[i] === "barrio" ? (
-                    <select
-                      value={formData.barrio || ""}
-                      onChange={(e) => handleChange("barrio", e.target.value)}
-                      disabled={!barrios.length} // Deshabilita si no hay barrios para la ubicación
-                      className={styles.selectInput}
-                    >
-                      <option value="">Seleccioná un barrio</option>
-                      {barrios.map((barrio, index) => (
-                        <option key={index} value={barrio}>{barrio}</option>
                       ))}
                     </select>
                   ) : (

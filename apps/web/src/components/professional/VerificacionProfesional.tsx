@@ -1,18 +1,18 @@
-// components/professional/VerificacionProfesional.tsx
+// @components/professional/VerificacionProfesional.tsx
 "use client";
 
 import { useState } from "react";
 import { usePerfil } from "@hooks/usePerfil"; // Asegúrate de que este hook esté correctamente implementado
-import styles from "./dashboardVerificacion.module.css";
+import styles from "./dashboardVerificacion.module.css"; // Asumo que tus estilos para verificación están aquí
 import ActualizarVerificacion from "./ActualizarVerificacion";
-import VerificacionHistorial from "./VerificacionHistorial"; // Importamos el componente de historial
+// import VerificacionHistorial from "./VerificacionHistorial"; // ¡COMENTADA O ELIMINADA para quitar el historial del dashboard!
 
 interface Props {
   userId: string;
 }
 
 export default function VerificacionProfesional({ userId }: Props) {
-  const { perfil, loading, error, refetchPerfil } = usePerfil(userId); // Usamos usePerfil
+  const { perfil, loading, error, refetchPerfil } = usePerfil(userId);
 
   const [mostrarFormulario, setMostrarFormulario] = useState(false);
 
@@ -38,51 +38,47 @@ export default function VerificacionProfesional({ userId }: Props) {
       {perfil ? (
         <>
           <p className={styles.estado}>
-            <strong>Estado:</strong> {displayStatus}
-            {perfil.verificacion_status === "rechazado" && perfil.comentario && (
-              <span className={styles.comentarioRechazo}> ({perfil.comentario})</span>
-            )}
+            Estado actual: <span className={styles[perfil.verificacion_status || ""]}>{displayStatus}</span>
           </p>
 
-          <div className={styles.docsGrid}>
-            {perfil.dni_url && (
-              <div className={styles.docCard}>
+          {perfil.comentario && perfil.verificacion_status === "rechazado" && (
+            <p className={styles.comentarioRechazo}>
+              **Motivo del rechazo:** {perfil.comentario}
+            </p>
+          )}
+
+          {perfil.dni_url || perfil.titulo_url || (perfil.trabajos_urls && perfil.trabajos_urls.length > 0) ? (
+            <div className={styles.documentosMostrados}>
+              {perfil.dni_url && (
                 <p>
-                  <strong>DNI:</strong>
+                  DNI subido: <a href={perfil.dni_url} target="_blank" rel="noopener noreferrer">Ver DNI</a>
                 </p>
-                <a href={perfil.dni_url} target="_blank" rel="noopener noreferrer">
-                  <img src={perfil.dni_url} alt="DNI" className={styles.image} />
-                </a>
-              </div>
-            )}
-            {perfil.constancia_domicilio_url && (
-              <div className={styles.docCard}>
+              )}
+              {perfil.titulo_url && (
                 <p>
-                  <strong>Constancia de domicilio:</strong>
+                  Título subido: <a href={perfil.titulo_url} target="_blank" rel="noopener noreferrer">Ver Título</a>
                 </p>
-                <a href={perfil.constancia_domicilio_url} target="_blank" rel="noopener noreferrer">
-                  <img src={perfil.constancia_domicilio_url} alt="Constancia de domicilio" className={styles.image} />
-                </a>
-              </div>
-            )}
-          </div>
-          {perfil.trabajos_urls && perfil.trabajos_urls.length > 0 && (
-            <div className={styles.trabajos}>
-              <p>
-                <strong>Trabajos realizados:</strong>
-              </p>
-              <div className={styles.trabajosGrid}>
-                {perfil.trabajos_urls.map((url: string, i: number) => (
-                  <a key={i} href={url} target="_blank" rel="noopener noreferrer">
-                    <img src={url} alt={`Trabajo ${i + 1}`} className={styles.trabajoImg} />
-                  </a>
-                ))}
-              </div>
+              )}
+              {perfil.trabajos_urls && perfil.trabajos_urls.length > 0 && (
+                <div>
+                  <p>Trabajos anteriores:{" "}
+                  </p>
+                  <div className={styles.trabajosGrid}>
+                    {perfil.trabajos_urls.map((url: string, i: number) => (
+                      <a key={i} href={url} target="_blank" rel="noopener noreferrer">
+                        <img src={url} alt={`Trabajo ${i + 1}`} className={styles.trabajoImg} />
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
+          ) : (
+            <p>No se encontraron documentos subidos.</p>
           )}
 
           {/* Botón para actualizar documentos (visible si está rechazado o no verificado) */}
-          {(perfil.verificacion_status === "rechazado" || perfil.verificacion_status === "no_verificado") && (
+          {(perfil.verificacion_status === "rechazado" || perfil.verificacion_status === "no_verificado" || !perfil.dni_url) && (
             <button
               onClick={() => setMostrarFormulario(!mostrarFormulario)}
               className={styles.updateButton}
@@ -96,8 +92,8 @@ export default function VerificacionProfesional({ userId }: Props) {
             <ActualizarVerificacion userId={userId} onDocumentUploaded={refetchPerfil} />
           )}
 
-          {/* Historial de Verificación */}
-          <VerificacionHistorial userId={userId} />
+          {/* ¡La línea de historial se eliminó o comentó aquí! */}
+          {/* <VerificacionHistorial userId={userId} /> */}
 
         </>
       ) : (

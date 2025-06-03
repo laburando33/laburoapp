@@ -1003,7 +1003,7 @@
 
 .\apps\web\src\app\professional\dashboard/
     ProfessionalDash.module.css (0.00 MB) [.css]
-    page.tsx (0.01 MB) [.tsx]
+    page.tsx (0.00 MB) [.tsx]
 
 .\apps\web\src\app\professional\historial-verificacion/
     page.tsx (0.00 MB) [.tsx]
@@ -1124,7 +1124,7 @@
     AvatarUploader.tsx (0.00 MB) [.tsx]
     AvatarWithFallback.tsx (0.00 MB) [.tsx]
     DashboardPro.module.css (0.00 MB) [.css]
-    DashboardPro.tsx (0.00 MB) [.tsx]
+    DashboardPro.tsx (0.01 MB) [.tsx]
     DashboardProLayout.tsx (0.00 MB) [.tsx]
     DocumentUploader.tsx (0.01 MB) [.tsx]
     Notifications.tsx (0.00 MB) [.tsx]

@@ -10,6 +10,8 @@ const ONESIGNAL_API_URL = "https://onesignal.com/api/v1/notifications";
 
 export async function POST(req: Request) {
   const body = await req.json();
+      console.log("Datos recibidos en la API:", body); // ¡Añade esta línea!
+
   const { user_email, job_description, category, location } = body;
 
   // 1. Crear solicitud

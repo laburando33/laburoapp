@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
-import { sendNotification } from "@utils/sendNotification";
-
+import { sendNotification } from "@utils/sendNotification"; // Asegúrate de que la ruta sea correcta
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -10,66 +9,93 @@ const supabase = createClient(
 
 export async function POST(req: Request) {
   try {
-    const { solicitudId, profesionalId } = await req.json();
+    const { solicitudId, profesionalId } = await req.json(); // Se espera profesionalId
 
     if (!solicitudId || !profesionalId) {
-      return NextResponse.json({ error: "Faltan datos requeridos" }, { status: 400 });
+      return NextResponse.json({ error: "Faltan datos requeridos (solicitudId, profesionalId)" }, { status: 400 });
     }
 
-    // ✅ Verificar si ya está desbloqueado
-    const { data: existing } = await supabase
+    // ✅ Verificar si ya está desbloqueado por este profesional
+    const { data: existing, error: checkError } = await supabase
       .from("paid_professionals")
       .select("id")
       .eq("solicitud_id", solicitudId)
-      .maybeSingle()
-      .eq("user_id", userId);// Verificar si el profesional ya desbloqueó la solicitud
+      .eq("profesional_id", profesionalId) // ✅ CORRECCIÓN: Usar profesionalId aquí
+      .maybeSingle();
+
+    if (checkError) {
+      console.error("❌ Error al verificar desbloqueo existente:", checkError.message);
+      throw checkError;
+    }
     if (existing) {
-      return NextResponse.json({ success: true, alreadyUnlocked: true });
+      return NextResponse.json({ success: true, alreadyUnlocked: true, message: "La solicitud ya fue desbloqueada por este profesional." });
     }
 
     // ✅ Verificar créditos del profesional
-    const { data: credit } = await supabase
+    const { data: credit, error: creditError } = await supabase
       .from("professional_credits")
-      .select("credits, external_user_id")
-      .eq("user_id", userId)
+      .select("credits, external_user_id") // Asegúrate de que external_user_id esté en esta tabla o se pueda obtener
+      .eq("user_id", profesionalId) // Usar profesionalId para buscar créditos
       .maybeSingle();
 
-      if (!credit || credit.credits < 20) {
+    if (creditError) {
+      console.error("❌ Error al obtener créditos del profesional:", creditError.message);
+      throw creditError;
+    }
+
+    if (!credit || credit.credits < 20) {
       return NextResponse.json({ error: "Créditos insuficientes" }, { status: 402 });
     }
 
-    // ✅ Descontar 1 crédito
-    await supabase
+    // ✅ Descontar 20 créditos (según tu código, antes era 1)
+    const { error: updateCreditError } = await supabase
       .from("professional_credits")
       .update({ credits: credit.credits - 20 })
-      .eq("user_id", userId)
+      .eq("user_id", profesionalId); // Usar profesionalId para actualizar créditos
+
+    if (updateCreditError) {
+      console.error("❌ Error al descontar créditos:", updateCreditError.message);
+      throw updateCreditError;
+    }
 
     // ✅ Registrar el desbloqueo
-    await supabase.from("paid_professionals").insert({
-      solicitud_id: solicitudId,
-      profesional_id: profesionalId,
-      unlocked_at: new Date().toISOString(),
-    });
+    const { error: insertUnlockError } = await supabase
+      .from("paid_professionals")
+      .insert({
+        solicitud_id: solicitudId,
+        profesional_id: profesionalId,
+        unlocked_at: new Date().toISOString(),
+      });
 
-    // ✅ Enviar notificación al profesional
+    if (insertUnlockError) {
+      console.error("❌ Error al registrar el desbloqueo:", insertUnlockError.message);
+      throw insertUnlockError;
+    }
+
+    // ✅ Enviar notificación al profesional (si tiene external_user_id)
     if (credit.external_user_id) {
+      // Cargar la descripción de la solicitud para la notificación
+      const { data: request, error: requestError } = await supabase
+        .from("requests")
+        .select("job_description, location")
+        .eq("id", solicitudId)
+        .maybeSingle();
+
+      if (requestError) {
+        console.warn("⚠️ No se pudo obtener la descripción de la solicitud para la notificación:", requestError.message);
+      }
+
       await sendNotification({
         title: "🔓 Solicitud Desbloqueada",
-        message: "Has desbloqueado una nueva solicitud. ¡Revisa los detalles!",
-        url: `https://localhost:3000/solicitudes/${solicitudId}`,
+        message: `Has desbloqueado la solicitud: "${request?.job_description || 'sin descripción'}" en ${request?.location || 'ubicación desconocida'}. ¡Revisa los detalles!`,
+        url: `https://localhost:3000/professional/solicitudes/${solicitudId}`, // Ajusta la URL según tu app
         externalUserIds: [credit.external_user_id]
       });
     }
 
     return NextResponse.json({ success: true, message: "Solicitud desbloqueada y notificación enviada." });
   } catch (err: any) {
-    console.error("❌ Error al desbloquear solicitud:", err.message);
-    return NextResponse.json({ error: "Error al desbloquear la solicitud" }, { status: 500 });
+    console.error("❌ Error en la ruta de desbloqueo de solicitud:", err.message);
+    return NextResponse.json({ error: `Error al desbloquear la solicitud: ${err.message}` }, { status: 500 });
   }
 }
-
-// Este código maneja el desbloqueo de solicitudes por parte de profesionales en la plataforma Laburando.
-// Primero verifica si la solicitud ya fue desbloqueada por el profesional.
-// Luego verifica si el profesional tiene créditos suficientes para desbloquear la solicitud.
-// Desconta el crédito del profesional y guarda el desbloqueo en la tabla correspondiente.
-// Finalmente, envía una notificación híbrida al profesional y al cliente.

@@ -1,19 +1,20 @@
-// src/app/admin/verificar-profesionales/page.tsx
+// src/components/admin/VerificarProfesionales.tsx
 'use client';
 
-import { useEffect, useState } from 'react';
-import { supabase } from '@lib/supabase-web'; // ✅ Esto es correcto, ya que uses createPagesBrowserClient
+import { useEffect, useState, useCallback } from 'react';
+import { supabase } from '@lib/supabase-web';
 import styles from '@styles/admin.module.css';
-import { verificarProfesional } from '@admin/actions/verificarProfesional.ts'; // Asegúrate de que esta ruta sea correcta
+import { verificarProfesional } from '@admin/actions/verificarProfesional';
 
-
+// Define la interfaz de tus datos de verificación
 interface Verificacion {
   user_id: string;
-  estado: string;
+  estado: string; // Esto es el estado de la tabla verificaciones_profesionales
   dni_url: string;
   certificado_url: string;
+  constancia_domicilio_url: string; // ✅ Asegúrate de que esta esté en tu esquema y la estás seleccionando
   trabajos_urls: string[];
-  professionals: { // Relación con la tabla 'professionals' para obtener el nombre y email
+  professionals: {
     full_name: string;
     email: string;
   };
@@ -24,16 +25,18 @@ export default function VerificacionAdminPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchPendientes = async () => {
+  const fetchPendientes = useCallback(async () => {
     setLoading(true);
+    setError(null);
     try {
-      const { data, error } = await supabase
-        .from('verificaciones_profesionales') // Correcto: consulta la tabla de verificaciones
+      const { data, error: fetchError } = await supabase
+        .from('verificaciones_profesionales')
         .select(`
           user_id,
           estado,
           dni_url,
           certificado_url,
+          constancia_domicilio_url,
           trabajos_urls,
           professionals (
             full_name,
@@ -42,67 +45,50 @@ export default function VerificacionAdminPage() {
         `)
         .eq('estado', 'pendiente');
 
-      if (error) throw error;
+      if (fetchError) {
+        throw new Error(`Error al cargar las verificaciones pendientes: "${fetchError.details}" (line ${fetchError.line}, column ${fetchError.column})`);
+      }
       setPendientes(data || []);
     } catch (err: any) {
-      setError('Error al cargar verificaciones.');
-      console.error(err.message);
+      console.error('Error en fetchPendientes:', err);
+      setError(err.message);
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
     fetchPendientes();
-    // Opcional: Suscripción Realtime para actualizaciones en tiempo real si se añaden nuevas verificaciones
-    const channel = supabase
-      .channel('verificaciones_pendientes')
-      .on(
-        'postgres_changes',
-        { event: '*', schema: 'public', table: 'verificaciones_profesionales', filter: 'estado=eq.pendiente' },
-        (payload) => {
-          if (payload.eventType === 'INSERT') {
-            // Cuando una nueva solicitud pendiente llega, añadirla a la lista
-            setPendientes((prev) => [...prev, payload.new as Verificacion]);
-          } else if (payload.eventType === 'UPDATE' && payload.new.estado !== 'pendiente') {
-            // Cuando una solicitud deja de ser pendiente (se verifica/rechaza), removerla
-            setPendientes((prev) => prev.filter((p) => p.user_id !== payload.old?.user_id));
-          }
-          // Si una existente pasa a pendiente, también la agregamos
-          if (payload.eventType === 'UPDATE' && payload.new.estado === 'pendiente' && !pendientes.some(p => p.user_id === payload.new.user_id)) {
-            fetchPendientes(); // O una lógica más fina para añadirla directamente
-          }
-        }
-      )
-      .subscribe();
+  }, [fetchPendientes]);
 
-    return () => {
-      supabase.removeChannel(channel);
-    };
-  }, []); // Dependencias: solo se ejecuta una vez al montar
+  const confirmarAccion = async (
+    pro: Verificacion,
+    estado: 'verificado' | 'rechazado'
+  ) => {
+    let comentario: string | null = null;
 
-
-  const confirmarAccion = async (pro: Verificacion, estado: 'verificado' | 'rechazado') => {
-    const comentario = estado === 'rechazado' ? prompt('Ingrese un comentario para el rechazo (opcional):') : null;
-
-    if (estado === 'rechazado' && comentario === null) {
-      // Si se cancela el prompt de rechazo
-      return;
+    if (estado === 'rechazado') {
+      comentario = prompt('Ingrese un comentario para el rechazo (opcional):');
+      if (comentario === null) {
+        return;
+      }
     }
 
     try {
-      const result = await verificarProfesional({
-        user_id: pro.user_id,
-        estado,
-        comentario: comentario || undefined, // undefined para no enviar null si no hay comentario
-      });
+      const result = await verificarProfesional(
+        pro.user_id,
+        estado, // 'verificado' o 'rechazado'
+        comentario || '',
+        pro.professionals.full_name,
+        pro.professionals.email
+      );
 
-      if (result.error) {
+      if (!result.success) {
         alert(`Error al realizar la acción: ${result.error}`);
         console.error('Error al verificar/rechazar:', result.error);
       } else {
         alert(`Profesional ${estado} correctamente.`);
-        fetchPendientes(); // Vuelve a cargar la lista para reflejar el cambio
+        fetchPendientes();
       }
     } catch (err: any) {
       alert(`Error inesperado: ${err.message}`);
@@ -112,7 +98,7 @@ export default function VerificacionAdminPage() {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>✅ Verificar Profesionales</h1>
+      <h1>Verificación de Profesionales</h1>
       <button onClick={fetchPendientes} className={styles.refreshButton}>
         Actualizar lista
       </button>
@@ -131,10 +117,15 @@ export default function VerificacionAdminPage() {
                 <strong>{pro.professionals.full_name}</strong> – {pro.professionals.email}
               </div>
               <div className={styles.fileLinks}>
-                <a href={pro.dni_url} target="_blank">📄 DNI</a> |{' '}
-                <a href={pro.certificado_url} target="_blank">📄 Certificado</a> |{' '}
+                <a href={pro.dni_url} target="_blank" rel="noopener noreferrer">📄 DNI</a> |{' '}
+                <a href={pro.certificado_url} target="_blank" rel="noopener noreferrer">📄 Certificado</a> |{' '}
+                {pro.constancia_domicilio_url && (
+                    <>
+                        <a href={pro.constancia_domicilio_url} target="_blank" rel="noopener noreferrer">📄 Constancia Domicilio</a> |{' '}
+                    </>
+                )}
                 {pro.trabajos_urls?.map((url, idx) => (
-                  <a key={idx} href={url} target="_blank">📁 Trabajo {idx + 1}</a>
+                  <a key={idx} href={url} target="_blank" rel="noopener noreferrer">📁 Trabajo {idx + 1}</a>
                 ))}
               </div>
               <div className="flex gap-2 mt-2">

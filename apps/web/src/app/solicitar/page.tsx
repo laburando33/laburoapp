@@ -2,10 +2,10 @@
 
 import { useState, useEffect } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import { supabase } from "@lib/supabase-web";
-import { sendNotification } from "@utils/sendNotification";
+import { supabase } from "@lib/supabase-web"; // Asegúrate de que esta ruta sea correcta
+import { sendNotification } from "@utils/sendNotification"; // Esta importación puede no ser necesaria si la notificación se maneja en el backend
 
-/*************  ✨ Windsurf Command ⭐  *************/
+/************* ✨ Windsurf Command ⭐  *************/
 /**
  * Página para solicitar presupuesto.
  *
@@ -30,7 +30,7 @@ import { sendNotification } from "@utils/sendNotification";
  * La página utiliza el hook `useRouter` para redirigir al usuario a la página
  * principal después de enviar la solicitud.
  */
-/*******  54bde7e0-6243-40b8-83f1-5b6f4e6a5abb  *******/
+/******* 54bde7e0-6243-40b8-83f1-5b6f4e6a5abb  *******/
 export default function SolicitarPage() {
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -38,57 +38,54 @@ export default function SolicitarPage() {
   const [form, setForm] = useState({
     user_email: "",
     phone: "",
+    category: searchParams.get("category") || "",
+    location: searchParams.get("location") || "",
     job_description: "",
-    category: "",
-    location: ""
   });
 
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    const categoria = searchParams.get("categoria");
-    const location = searchParams.get("location");
-    setForm((prev) => ({
-      ...prev,
-      category: categoria || "",
-      location: location || ""
-    }));
-  }, [searchParams]);
-
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    setForm((prev) => ({ ...prev, [name]: value }));
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async () => {
-    if (!form.user_email || !form.category || !form.location || !form.job_description) {
-      alert("Por favor completá todos los campos obligatorios.");
-      return;
-    }
-
-    setLoading(true);
-    const { error } = await supabase.from("requests").insert([form]);
-
-    if (error) {
-      alert("❌ Error al crear la solicitud");
-      console.error(error);
-    } else {
-      await sendNotification({
-        title: `Nueva solicitud de ${form.category}`,
-        message: `${form.location} - ${form.job_description}`,
+    try {
+      // ✅ Aquí llamamos a TU PROPIO ENDPOINT DE API (/api/requests)
+      // Este endpoint ya se encarga de insertar en Supabase y de la notificación.
+      const response = await fetch('/api/requests', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        // Enviamos los datos directamente como los espera el backend
+        body: JSON.stringify({
+          user_email: form.user_email,
+          job_description: form.job_description,
+          category: form.category,
+          location: form.location,
+          // 'phone' no es parte del esquema de la tabla 'requests' en tu route.ts.
+          // Si lo necesitas, debes añadirlo a la tabla 'requests' y a tu route.ts.
+          // Por ahora, lo dejamos fuera o lo integras en job_description.
+          // phone: form.phone,
+        }),
       });
 
-      alert("✅ Solicitud enviada correctamente.");
-      router.push("/");
-    }
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Error desconocido al enviar solicitud.');
+      }
 
-    setLoading(false);
+      const result = await response.json();
+      console.log('Solicitud enviada con éxito:', result.solicitud); // Log de la solicitud creada
+      alert('¡Solicitud de presupuesto enviada con éxito!');
+      router.push('/'); // Redirigir a la página principal
+    } catch (error: any) {
+      alert('Error al enviar la solicitud: ' + error.message);
+      console.error(error);
+    }
   };
 
   return (
-    <main style={{ maxWidth: 600, margin: "auto", padding: 20 }}>
+    <main style={{ maxWidth: 800, margin: "auto", padding: 20 }}>
       <h1>📋 Solicitar presupuesto</h1>
 
       <input
@@ -140,8 +137,8 @@ export default function SolicitarPage() {
         style={{ width: "100%", margin: "10px 0", padding: 10 }}
       />
 
-      <button onClick={handleSubmit} disabled={loading} style={{ padding: "10px 20px" }}>
-        {loading ? "Enviando..." : "Enviar solicitud"}
+      <button onClick={handleSubmit} disabled={!form.user_email || !form.category || !form.location || !form.job_description} style={{ padding: 10, backgroundColor: "#007bff", color: "white", border: "none", cursor: "pointer" }}>
+        Enviar Solicitud
       </button>
     </main>
   );
