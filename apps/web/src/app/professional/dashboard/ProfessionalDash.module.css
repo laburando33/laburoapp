@@ -1,0 +1,33 @@
+.dashboardContainer {
+    padding: 2rem;
+  }
+  
+  .title {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .sectionGrid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  }
+  
+  .card {
+    background: #fff8dc;
+    padding: 1.2rem;
+    border-radius: 8px;
+    font-weight: bold;
+    text-decoration: none;
+    border: 1px solid #ddd;
+    transition: all 0.2s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .card:hover {
+    background: #ffeaa7;
+    transform: translateY(-2px);
+  }
+  

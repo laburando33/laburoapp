@@ -1,45 +1,37 @@
-"use client";
 
 import { useEffect, useState } from "react";
 import { supabase } from "@lib/supabase-web";
 
-type RolUsuario = "admin" | "user" | null;
-
-export function useUserRole(): { rol: RolUsuario; loading: boolean } {
-  const [rol, setRol] = useState<RolUsuario>(null);
-  const [loading, setLoading] = useState(true);
+export function useUserRole(userId?: string | null) {
+  const [role, setRole] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(!!userId);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchRol = async () => {
+    const fetchRole = async () => {
+      if (!userId) return;
+
       setLoading(true);
-      const {
-        data: { user },
-        error: authError
-      } = await supabase.auth.getUser();
 
-      if (authError || !user) {
-        setRol(null);
-        setLoading(false);
-        return;
-      }
-
-      const { data: profile, error } = await supabase
+      const { data, error } = await supabase
         .from("professionals")
         .select("role")
-        .eq("user_id", user.id)
-        .maybeSingle();
+        .eq("user_id", userId)
+        .limit(1);
 
-      if (error || !profile) {
-        setRol(null);
+      if (error) {
+        console.error("❌ Error obteniendo rol:", error.message);
+        setError(error.message);
+        setRole(null);
       } else {
-        setRol((profile.role as RolUsuario) || "user");
+        setRole(data?.[0]?.role ?? null);
       }
 
       setLoading(false);
     };
 
-    fetchRol();
-  }, []);
+    fetchRole();
+  }, [userId]);
 
-  return { rol, loading };
+  return { role, loading, error };
 }

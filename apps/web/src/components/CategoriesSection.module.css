@@ -1,0 +1,157 @@
+.section {
+    background-color: white;
+  }
+  .section h2 {
+    font-size: 2.5rem;
+    font-weight: 300;
+    color: #111;
+    text-align: center;
+   
+
+  }
+  .section h4 {
+    font-size: 1.5rem;
+    font-weight: 300;
+    color: #444;
+    margin-top: 5rem;
+    text-align: center;
+  }
+  .section h2 strong {
+    font-weight: 600;
+    color: #fcd93f;
+    font-size: 2.5rem;
+  }
+  .container {
+    margin-bottom: 100px;
+    padding: 0 1rem;
+  }
+  
+  .title {
+    font-size: 1.875rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 2.5rem;
+    color: #333;
+    
+  }
+  
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 1rem;
+    margin: 10px;
+  }
+  
+  
+  
+
+  .link {
+    display: block;
+    text-decoration: none;
+  }
+  
+  .card {
+    background-color: white;
+    border: 2px solid #f3f4f6;
+    border-radius: 0.75rem;
+    padding: 1.25rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    height: 100%;
+    box-shadow: 0 1px 3px rgba(26, 25, 25, 0.1);
+    transition: all 0.3s ease;
+  }
+  
+  .card:hover {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-color: #fcd93f;
+  }
+  
+  .iconWrapper {
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+    transition: transform 0.3s ease;
+  }
+  
+  .card:hover .iconWrapper {
+    transform: scale(1.1);
+  }
+  
+  .imageContainer {
+    display: flex;
+    position: relative;
+  }
+  
+  .image {
+    object-fit: contain;
+  }
+  
+  .reactIconContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .categoryName {
+    display: block;
+    font-size: 1.125rem;
+    font-weight: 500;
+    color: #333;
+    transition: color 0.3s ease;
+  }
+  
+  .card:hover .categoryName {
+    color: #e6b800;
+  }
+  .jewelEffect {
+    filter: drop-shadow(0 0 4px #fcd93f) brightness(1.15);
+    transition: transform 0.3s ease, filter 0.3s ease;
+  }
+  
+  .card:hover .jewelEffect {
+    transform: scale(1.05);
+    filter: drop-shadow(0 0 6px #ffd700) brightness(1.25);
+  }
+  .ctaContainer {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .ctaButton {
+    color: black;
+    font-size: 1.1rem;
+    margin-top: 30px;
+    border-bottom: #fcd93f solid 3px;
+    font-weight: 300;
+  }
+  
+  .ctaButton:hover {
+    background-color: #fcd93f;
+    transform: scale(1.03);
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+  }
+  
+  @media (max-width: 768px) {
+    .grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .section h2 {
+      font-size: 1.2rem;
+    } 
+    .section h2 strong {
+      font-size: 1.5rem;
+    }
+    .section h4 {
+      font-size: 1rem;
+      margin-top: 1.5rem;
+    }
+    
+  }
+ 

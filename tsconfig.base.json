@@ -2,10 +2,23 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@components/*": ["packages/ui/components/*"],
-      "@lib/web-supabase": ["packages/utils/supabase-web.ts"],
+      /* ────── aliases internos de la app web ────── */
+      "@/*":               ["apps/web/src/*"],
+      "@components/*":     ["apps/web/src/components/*"],
+      "@hooks/*":          ["apps/web/src/hooks/*"],
+      "@lib/*":            ["apps/web/src/lib/*"],
+
+      /* ────── paquetes compartidos ────── */
+      "@ui/*":             ["packages/ui/*"],
+      "@utils/*":          ["packages/utils/*"],
+      "@package/*":        ["packages/*"],
+
+      /* ────── clientes Supabase dedicados ────── */
+      "@lib/web-supabase":    ["packages/utils/supabase-web.ts"],
       "@lib/mobile-supabase": ["packages/utils/supabase-mobile.ts"]
     },
+
+    /* ajustes generales */
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
